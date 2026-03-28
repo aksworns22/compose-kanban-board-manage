@@ -8,7 +8,6 @@ import woowacourse.kanban.board.ui.board.KanbanBoardScreen
 import woowacourse.kanban.board.ui.board.ProjectState
 
 @Composable
-@Preview
 fun App() {
     MaterialTheme {
         KanbanBoardScreen(
