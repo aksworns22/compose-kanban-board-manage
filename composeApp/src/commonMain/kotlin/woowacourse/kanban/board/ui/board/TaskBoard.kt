@@ -37,11 +37,11 @@ fun TaskBoard(
         modifier = modifier.fillMaxWidth().fillMaxHeight().background(Color(0xffF9FAFB)),
     ) {
         KanbanHeader(
-            title = projectState.projectGroup.selectedProject.name,
+            title = projectState.currentProject.name,
             onClickCreate = onClickCreate,
-            totalCount = projectState.totalCount,
-            completeCount = projectState.completeCount,
-            completeRatio = projectState.completeRatio,
+            totalCount = projectState.currentProject.totalCount,
+            completeCount = projectState.currentProject.completeCount,
+            completeRatio = projectState.currentProject.completeRatio,
         )
 
         Row(
@@ -53,7 +53,7 @@ fun TaskBoard(
                     modifier = Modifier.weight(1f, fill = false).widthIn(max = 320.dp).fillMaxHeight()
                         .semantics { contentDescription = "$status 태스크 목록" },
                     status = status,
-                    tasks = projectState.projectGroup.selectedProject.tasks.filter { it.status == status },
+                    tasks = projectState.currentProject.getTasks(status),
                     boxColor = status.getBoxColor(),
                     getIsDropTarget = { getIsDropTarget(status) },
                     onBoundsChanged = { rect -> onBoundsChanged(rect, status) },
@@ -70,5 +70,5 @@ fun TaskBoard(
 @Preview(showBackground = true, widthDp = 800)
 @Composable
 private fun TaskBoardPreview() {
-    TaskBoard(projectState = ProjectState(listOf(KanbanProject(id = 1, name = "스마일은 천재인가?")), 1))
+    TaskBoard(projectState = ProjectState(KanbanProject(name = "스마일은 천재인가?", emptyList())))
 }

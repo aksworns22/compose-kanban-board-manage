@@ -2,31 +2,35 @@ package woowacourse.kanban.board.ui.board
 
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.setValue
 import woowacourse.kanban.board.domain.model.KanbanProject
-import woowacourse.kanban.board.domain.model.ProjectGroup
 import woowacourse.kanban.board.domain.model.Status
 import woowacourse.kanban.board.domain.model.Task
 
 @Stable
-class ProjectState(val projects: List<KanbanProject>, initialProjectId: Long) {
-    var projectGroup: ProjectGroup by mutableStateOf(ProjectGroup(projects, initialProjectId))
-        private set
+class ProjectState(vararg projects: KanbanProject) {
+    init {
+        require(projects.isNotEmpty()) { "최소 하나의 칸반 프로젝트가 필요합니다. " }
+    }
+    private val _allProjects = mutableStateListOf(*projects)
+    val allProjects: List<KanbanProject> get() = _allProjects
 
-    val totalCount: Int get() = projectGroup.selectedProject.tasks.size
-    val completeCount: Int get() = projectGroup.selectedProject.tasks.count { it.status == Status.DONE }
-    val completeRatio: Float get() = if (totalCount == 0) 0f else completeCount.toFloat() / totalCount.toFloat()
+    private var currentProjectIndex: Int by mutableIntStateOf(0)
+
+    val currentProject: KanbanProject get() = _allProjects[currentProjectIndex]
 
     fun createTask(task: Task) {
-        projectGroup = projectGroup.addTask(task)
+        _allProjects[currentProjectIndex] = _allProjects[currentProjectIndex].addTask(task)
     }
 
-    fun selectProject(projectId: Long) {
-        projectGroup = projectGroup.changeProject(projectId)
+    fun selectProject(index: Int) {
+        if (index !in _allProjects.indices) return
+        currentProjectIndex = index
     }
 
     fun changeTaskStatus(task: Task, newStatus: Status) {
-        projectGroup = projectGroup.changeTaskStatus(task, newStatus)
+        _allProjects[currentProjectIndex] = _allProjects[currentProjectIndex].changeTaskStatus(task, newStatus)
     }
 }
