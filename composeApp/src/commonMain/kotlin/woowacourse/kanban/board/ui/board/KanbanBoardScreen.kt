@@ -48,6 +48,11 @@ fun KanbanBoardScreen(initialProjectState: ProjectState) {
     var currentDragPosition by remember { mutableStateOf<Offset?>(null) }
     val columnBounds = remember { mutableStateMapOf<Status, Rect>() }
 
+    val resetDrag: () -> Unit = {
+        currentDragPosition = null
+        draggedTask = null
+    }
+
     LaunchedEffect(snackBarEvent?.id) {
         snackBarEvent?.let {
             snackBarHostState.showSnackbar(
@@ -113,13 +118,9 @@ fun KanbanBoardScreen(initialProjectState: ProjectState) {
                             )
                         }
                     }
-                    currentDragPosition = null
-                    draggedTask = null
+                    resetDrag()
                 },
-                onTaskDragCancel = {
-                    currentDragPosition = null
-                    draggedTask = null
-                },
+                onTaskDragCancel = resetDrag,
                 projectState = projectState,
                 onClickCreate = { showDialog = true },
                 modifier = Modifier.semantics { contentDescription = "${projectState.currentProject.name} 화면" },
