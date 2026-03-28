@@ -15,7 +15,7 @@ class ProjectState(vararg projects: KanbanProject) {
         require(projects.isNotEmpty()) { "최소 하나의 칸반 프로젝트가 필요합니다. " }
     }
     private val _allProjects = mutableStateListOf(*projects)
-    val allProjects: List<KanbanProject> get() = _allProjects
+    val allProjects: List<KanbanProject> get() = _allProjects.toList()
 
     private var currentProjectIndex: Int by mutableIntStateOf(0)
 
