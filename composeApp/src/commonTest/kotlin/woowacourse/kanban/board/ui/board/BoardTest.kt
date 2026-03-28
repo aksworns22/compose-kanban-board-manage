@@ -1,7 +1,8 @@
 package woowacourse.kanban.board.ui.board
 
 import androidx.compose.ui.test.ExperimentalTestApi
-import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertTextEquals
+import androidx.compose.ui.test.isHeading
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTouchInput
@@ -29,12 +30,11 @@ class BoardTest {
                 initialProjectState = state,
             )
         }
-        onNodeWithContentDescription(label = "A 프로젝트 화면").assertIsDisplayed()
+        onNode(isHeading()).assertTextEquals("A 프로젝트")
         onNodeWithContentDescription(label = "B 프로젝트 전환 버튼").performClick()
 
-        // Then B 프로젝트에 대한 태스크 목록이 표시된다
-        onNodeWithContentDescription(label = "A 프로젝트 화면").assertDoesNotExist()
-        onNodeWithContentDescription(label = "B 프로젝트 화면").assertIsDisplayed()
+        // Then B 프로젝트 화면으로 이등한다
+        onNode(isHeading()).assertTextEquals("B 프로젝트")
     }
 
     @Test

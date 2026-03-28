@@ -123,7 +123,6 @@ fun KanbanBoardScreen(initialProjectState: ProjectState) {
                 onTaskDragCancel = resetDrag,
                 projectState = projectState,
                 onClickCreate = { showDialog = true },
-                modifier = Modifier.semantics { contentDescription = "${projectState.currentProject.name} 화면" },
             )
         }
 
