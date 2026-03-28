@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import kanbanboard.composeapp.generated.resources.Res
 import kanbanboard.composeapp.generated.resources.snackbar_create_new_task
 import kanbanboard.composeapp.generated.resources.snackbar_error_create_new_task
+import kanbanboard.composeapp.generated.resources.snackbar_move_task
 import kanbanboard.composeapp.generated.resources.snackbar_unknown_error
 import org.jetbrains.compose.resources.getString
 import woowacourse.kanban.board.domain.TaskCreator
@@ -108,7 +109,7 @@ fun KanbanBoardScreen(initialProjectState: ProjectState) {
                         if (targetStatus != null && task.status != targetStatus) {
                             projectState.changeTaskStatus(task = task, newStatus = targetStatus)
                             snackBarEvent = SnackBarEvent(
-                                message = "태스크가 이동되었습니다.",
+                                strRes = Res.string.snackbar_move_task,
                             )
                         }
                     }
