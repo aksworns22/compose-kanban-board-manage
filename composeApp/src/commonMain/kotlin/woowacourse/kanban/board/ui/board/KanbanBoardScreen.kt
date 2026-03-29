@@ -76,7 +76,7 @@ fun KanbanBoardScreen(initialProjectState: ProjectState) {
                         TaskCreator.create(title = title, description = description, tags = tags, assignee = assignee, status = status)
 
                     result.onSuccess { newTask ->
-                        projectState.createTask(newTask)
+                        projectState.addTask(newTask)
                         showDialog = false
                         snackBarEvent =
                             SnackBarEvent(

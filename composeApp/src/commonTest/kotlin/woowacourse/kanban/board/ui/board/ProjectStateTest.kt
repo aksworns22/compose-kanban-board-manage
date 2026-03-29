@@ -56,7 +56,7 @@ class ProjectStateTest {
         val projectState = ProjectState(project)
 
         assertThat(projectState.currentProject.totalCount).isEqualTo(0)
-        projectState.createTask(Task(title = "1번 태스크", tags = Tags(emptyList()), user = User("dino"), status = Status.TODO))
+        projectState.addTask(Task(title = "1번 태스크", tags = Tags(emptyList()), user = User("dino"), status = Status.TODO))
 
         assertThat(projectState.currentProject.totalCount).isEqualTo(1)
     }
@@ -68,7 +68,7 @@ class ProjectStateTest {
         val startTask = Task(title = "1번 태스크", tags = Tags(emptyList()), user = User("dino"), status = Status.TODO)
         val expectedTask = startTask.copy(status = Status.IN_PROGRESS)
 
-        projectState.createTask(startTask)
+        projectState.addTask(startTask)
         assertThat(projectState.currentProject.getTasks(Status.IN_PROGRESS)).doesNotContain(expectedTask)
         projectState.changeTaskStatus(startTask, Status.IN_PROGRESS)
 

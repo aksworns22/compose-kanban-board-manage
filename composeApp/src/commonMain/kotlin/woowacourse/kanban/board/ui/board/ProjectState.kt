@@ -1,6 +1,5 @@
 package woowacourse.kanban.board.ui.board
 
-import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
@@ -9,7 +8,6 @@ import woowacourse.kanban.board.domain.model.KanbanProject
 import woowacourse.kanban.board.domain.model.Status
 import woowacourse.kanban.board.domain.model.Task
 
-@Stable
 class ProjectState(vararg projects: KanbanProject) {
     init {
         require(projects.isNotEmpty()) { "최소 하나의 칸반 프로젝트가 필요합니다. " }
@@ -21,7 +19,7 @@ class ProjectState(vararg projects: KanbanProject) {
 
     val currentProject: KanbanProject get() = _allProjects[currentProjectIndex]
 
-    fun createTask(task: Task) {
+    fun addTask(task: Task) {
         _allProjects[currentProjectIndex] = _allProjects[currentProjectIndex].addTask(task)
     }
 
