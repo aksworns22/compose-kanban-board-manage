@@ -8,7 +8,6 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.runComposeUiTest
 import kotlin.test.Test
-import woowacourse.kanban.board.domain.model.KanbanProject
 import woowacourse.kanban.board.domain.model.Status
 import woowacourse.kanban.board.domain.model.Tag
 import woowacourse.kanban.board.domain.model.Tags
@@ -22,12 +21,12 @@ class BoardTest {
     fun `사용자가 프로젝트 선택하면 해당하는 해당 프로젝트 화면으로 전환된다`() = runComposeUiTest {
 
         // Given 현재 프로젝트가 A프로젝트
-        val state = ProjectState(KanbanProject("A 프로젝트", emptyList()), KanbanProject("B 프로젝트", emptyList()))
+        val state = KanbanBoardState(KanbanProjectState("A 프로젝트"), KanbanProjectState("B 프로젝트"))
 
         // When B 프로젝트를 선택한다.
         setContent {
             KanbanBoardScreen(
-                initialProjectState = state,
+                initialKanbanBoardState = state,
             )
         }
         onNode(isHeading()).assertTextEquals("A 프로젝트")
@@ -46,12 +45,12 @@ class BoardTest {
             user = User("정준하"),
             status = Status.TODO,
         )
-        val state = ProjectState(KanbanProject("A 프로젝트", listOf(task)), KanbanProject("B 프로젝트", emptyList()))
+        val state = KanbanBoardState(KanbanProjectState("A 프로젝트", task), KanbanProjectState("B 프로젝트"))
 
         // When 사용자가 태스크를 드래그앤드롭한다
         setContent {
             KanbanBoardScreen(
-                initialProjectState = state,
+                initialKanbanBoardState = state,
             )
         }
         val targetArea = onNodeWithContentDescription("Project SideBar").fetchSemanticsNode().boundsInWindow.center
@@ -73,12 +72,12 @@ class BoardTest {
             user = User("정준하"),
             status = Status.TODO,
         )
-        val state = ProjectState(KanbanProject("A 프로젝트", listOf(task)), KanbanProject("B 프로젝트", emptyList()))
+        val state = KanbanBoardState(KanbanProjectState("A 프로젝트", task), KanbanProjectState("B 프로젝트"))
 
         // When 사용자가 태스크를 드래그앤드롭한다
         setContent {
             KanbanBoardScreen(
-                initialProjectState = state,
+                initialKanbanBoardState = state,
             )
         }
         val baseTouchOffset = onNodeWithContentDescription("${task.status}상태의 ${task.title}태스크").fetchSemanticsNode().boundsInWindow.center
@@ -102,12 +101,12 @@ class BoardTest {
             user = User("정준하"),
             status = Status.TODO,
         )
-        val state = ProjectState(KanbanProject("A 프로젝트", listOf(task)), KanbanProject("B 프로젝트", emptyList()))
+        val state = KanbanBoardState(KanbanProjectState("A 프로젝트", task), KanbanProjectState("B 프로젝트"))
 
         // When 사용자가 태스크를 드롭한다
         setContent {
             KanbanBoardScreen(
-                initialProjectState = state,
+                initialKanbanBoardState = state,
             )
         }
         val baseTouchOffset = onNodeWithContentDescription("${task.status}상태의 ${task.title}태스크").fetchSemanticsNode().boundsInWindow.center

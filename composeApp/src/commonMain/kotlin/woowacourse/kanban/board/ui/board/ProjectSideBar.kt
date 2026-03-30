@@ -27,16 +27,25 @@ import kanbanboard.composeapp.generated.resources.Res
 import kanbanboard.composeapp.generated.resources.project_sidebar_subtitle
 import kanbanboard.composeapp.generated.resources.project_sidebar_title
 import org.jetbrains.compose.resources.stringResource
-import woowacourse.kanban.board.domain.model.KanbanProject
 
 @Composable
-fun ProjectSideBar(projectState: ProjectState, onProjectSelect: (Int) -> Unit, modifier: Modifier = Modifier, innerPadding: Dp = 16.dp) {
+fun ProjectSideBar(
+    kanbanBoardState: KanbanBoardState,
+    onProjectSelect: (Int) -> Unit,
+    modifier: Modifier = Modifier,
+    innerPadding: Dp = 16.dp,
+) {
     Column(
         modifier = modifier,
     ) {
         SideBarHeader(modifier = Modifier.padding(innerPadding))
         HorizontalDivider(modifier = Modifier.height(1.dp).background(Color(0xffE5E7EB)))
-        ProjectTabs(projectState.allProjects, projectState.currentProject, onProjectSelect, modifier = Modifier.padding(innerPadding))
+        ProjectTabs(
+            kanbanBoardState.allProjects,
+            kanbanBoardState.currentProject,
+            onProjectSelect,
+            modifier = Modifier.padding(innerPadding),
+        )
     }
 }
 
@@ -62,8 +71,8 @@ private fun SideBarHeader(modifier: Modifier = Modifier) {
 
 @Composable
 private fun ProjectTabs(
-    projects: List<KanbanProject>,
-    selectedProject: KanbanProject,
+    projects: List<KanbanProjectState>,
+    selectedProject: KanbanProjectState,
     onProjectSelect: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -98,7 +107,7 @@ private fun ProjectTabs(
 private fun ProjectSideBarPreview() {
     ProjectSideBar(
         modifier = Modifier.width(255.dp).fillMaxHeight(),
-        projectState = ProjectState(KanbanProject("Compose1", emptyList()), KanbanProject("Compose2", emptyList())),
+        kanbanBoardState = KanbanBoardState(KanbanProjectState("Compose1"), KanbanProjectState("Compose2")),
         onProjectSelect = {},
     )
 }

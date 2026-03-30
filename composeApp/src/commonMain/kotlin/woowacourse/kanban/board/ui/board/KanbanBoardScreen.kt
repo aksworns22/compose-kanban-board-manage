@@ -31,15 +31,14 @@ import kanbanboard.composeapp.generated.resources.snackbar_move_task
 import kanbanboard.composeapp.generated.resources.snackbar_unknown_error
 import org.jetbrains.compose.resources.getString
 import woowacourse.kanban.board.domain.TaskCreator
-import woowacourse.kanban.board.domain.model.KanbanProject
 import woowacourse.kanban.board.domain.model.Status
 import woowacourse.kanban.board.domain.model.Task
 import woowacourse.kanban.board.ui.dialog.TaskCreateDialog
 import woowacourse.kanban.board.ui.util.SnackBarEvent
 
 @Composable
-fun KanbanBoardScreen(initialProjectState: ProjectState) {
-    val projectState = remember { initialProjectState }
+fun KanbanBoardScreen(initialKanbanBoardState: KanbanBoardState) {
+    val projectState = remember { initialKanbanBoardState }
     var showDialog by remember { mutableStateOf(false) }
     val snackBarHostState = remember { SnackbarHostState() }
     var snackBarEvent: SnackBarEvent? by remember { mutableStateOf(null) }
@@ -76,7 +75,7 @@ fun KanbanBoardScreen(initialProjectState: ProjectState) {
                         TaskCreator.create(title = title, description = description, tags = tags, assignee = assignee, status = status)
 
                     result.onSuccess { newTask ->
-                        projectState.addTask(newTask)
+                        projectState.currentProject.addTask(newTask)
                         showDialog = false
                         snackBarEvent =
                             SnackBarEvent(
@@ -93,7 +92,7 @@ fun KanbanBoardScreen(initialProjectState: ProjectState) {
         }
         Row {
             ProjectSideBar(
-                projectState = projectState,
+                kanbanBoardState = projectState,
                 onProjectSelect = projectState::selectProject,
                 modifier = Modifier.width(255.dp).fillMaxHeight().semantics { contentDescription = "Project SideBar" },
             )
@@ -112,7 +111,7 @@ fun KanbanBoardScreen(initialProjectState: ProjectState) {
 
                     draggedTask?.let { task ->
                         if (targetStatus != null && task.status != targetStatus) {
-                            projectState.changeTaskStatus(task = task, newStatus = targetStatus)
+                            projectState.currentProject.changeTaskStatus(task = task, newStatus = targetStatus)
                             snackBarEvent = SnackBarEvent(
                                 strRes = Res.string.snackbar_move_task,
                             )
@@ -121,7 +120,7 @@ fun KanbanBoardScreen(initialProjectState: ProjectState) {
                     resetDrag()
                 },
                 onTaskDragCancel = resetDrag,
-                projectState = projectState,
+                kanbanBoardState = projectState,
                 onClickCreate = { showDialog = true },
             )
         }
@@ -136,5 +135,5 @@ fun KanbanBoardScreen(initialProjectState: ProjectState) {
 @Composable
 @Preview
 private fun KanbanBoardScreenPreview() {
-    KanbanBoardScreen(initialProjectState = ProjectState(KanbanProject(name = "허닛은 바보인가?", emptyList())))
+    KanbanBoardScreen(initialKanbanBoardState = KanbanBoardState(KanbanProjectState(name = "허닛은 바보인가?")))
 }

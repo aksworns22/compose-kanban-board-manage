@@ -17,13 +17,12 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import woowacourse.kanban.board.domain.model.KanbanProject
 import woowacourse.kanban.board.domain.model.Status
 import woowacourse.kanban.board.domain.model.Task
 
 @Composable
 fun TaskBoard(
-    projectState: ProjectState,
+    kanbanBoardState: KanbanBoardState,
     modifier: Modifier = Modifier,
     getIsDropTarget: (Status) -> Boolean = { false },
     onBoundsChanged: (Rect, Status) -> Unit = { _, _ -> },
@@ -37,11 +36,11 @@ fun TaskBoard(
         modifier = modifier.fillMaxWidth().fillMaxHeight().background(Color(0xffF9FAFB)),
     ) {
         KanbanHeader(
-            title = projectState.currentProject.name,
+            title = kanbanBoardState.currentProject.name,
             onClickCreate = onClickCreate,
-            totalCount = projectState.currentProject.totalCount,
-            completeCount = projectState.currentProject.completeCount,
-            completeRatio = projectState.currentProject.completeRatio,
+            totalCount = kanbanBoardState.currentProject.totalCount,
+            completeCount = kanbanBoardState.currentProject.completeCount,
+            completeRatio = kanbanBoardState.currentProject.completeRatio,
         )
 
         Row(
@@ -53,7 +52,7 @@ fun TaskBoard(
                     modifier = Modifier.weight(1f, fill = false).widthIn(max = 320.dp).fillMaxHeight()
                         .semantics { contentDescription = "$status 태스크 목록" },
                     status = status,
-                    tasks = projectState.currentProject.getTasks(status),
+                    tasks = kanbanBoardState.currentProject.getTasks(status),
                     boxColor = status.getBoxColor(),
                     getIsDropTarget = { getIsDropTarget(status) },
                     onBoundsChanged = { rect -> onBoundsChanged(rect, status) },
@@ -70,5 +69,5 @@ fun TaskBoard(
 @Preview(showBackground = true, widthDp = 800)
 @Composable
 private fun TaskBoardPreview() {
-    TaskBoard(projectState = ProjectState(KanbanProject(name = "스마일은 천재인가?", emptyList())))
+    TaskBoard(kanbanBoardState = KanbanBoardState(KanbanProjectState(name = "스마일은 천재인가?")))
 }
