@@ -19,7 +19,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
@@ -34,6 +33,7 @@ import woowacourse.kanban.board.domain.TaskCreator
 import woowacourse.kanban.board.domain.model.Status
 import woowacourse.kanban.board.domain.model.Task
 import woowacourse.kanban.board.ui.dialog.TaskCreateDialog
+import woowacourse.kanban.board.ui.theme.CustomTheme
 import woowacourse.kanban.board.ui.util.SnackBarEvent
 
 @Composable
@@ -94,9 +94,13 @@ fun KanbanBoardScreen(initialKanbanBoardState: KanbanBoardState) {
             ProjectSideBar(
                 kanbanBoardState = projectState,
                 onProjectSelect = projectState::selectProject,
-                modifier = Modifier.width(255.dp).fillMaxHeight().semantics { contentDescription = "Project SideBar" },
+                modifier = Modifier
+                    .width(255.dp)
+                    .fillMaxHeight()
+                    .background(CustomTheme.colors.white)
+                    .semantics { contentDescription = "Project SideBar" },
             )
-            VerticalDivider(modifier = Modifier.width(1.dp).background(Color(0xffE5E7EB)))
+            VerticalDivider(modifier = Modifier.width(1.dp).background(CustomTheme.colors.gray.w100))
             TaskBoard(
                 getIsDropTarget = { status ->
                     currentDragPosition?.let { columnBounds[status]?.contains(it) } ?: false

@@ -13,6 +13,7 @@ import kotlin.test.Test
 import woowacourse.kanban.board.domain.validator.TaskValidator
 import woowacourse.kanban.board.domain.validator.ValidationResult
 import woowacourse.kanban.board.ui.dialog.section.TagSection
+import woowacourse.kanban.board.ui.theme.CustomTheme
 
 @OptIn(ExperimentalTestApi::class)
 class TagTextFieldTest {
@@ -23,14 +24,16 @@ class TagTextFieldTest {
             var tagText by remember { mutableStateOf("") }
             var validation by remember { mutableStateOf<ValidationResult>(ValidationResult.Initial) }
 
-            TagSection(
-                value = tagText,
-                onTagChange = {
-                    tagText = it
-                    validation = TaskValidator.validateTags(it)
-                },
-                validation = validation,
-            )
+            CustomTheme {
+                TagSection(
+                    value = tagText,
+                    onTagChange = {
+                        tagText = it
+                        validation = TaskValidator.validateTags(it)
+                    },
+                    validation = validation,
+                )
+            }
         }
 
         onNode(hasSetTextAction()).performTextInput(",,,,,,")
@@ -45,14 +48,16 @@ class TagTextFieldTest {
             var tagText by remember { mutableStateOf("") }
             var validation by remember { mutableStateOf<ValidationResult>(ValidationResult.Initial) }
 
-            TagSection(
-                value = tagText,
-                onTagChange = {
-                    tagText = it
-                    validation = TaskValidator.validateTags(it)
-                },
-                validation = validation,
-            )
+            CustomTheme {
+                TagSection(
+                    value = tagText,
+                    onTagChange = {
+                        tagText = it
+                        validation = TaskValidator.validateTags(it)
+                    },
+                    validation = validation,
+                )
+            }
         }
 
         onNode(hasSetTextAction()).performTextInput("우아한테크코스")
@@ -67,14 +72,16 @@ class TagTextFieldTest {
             var tagText by remember { mutableStateOf("") }
             var validation by remember { mutableStateOf<ValidationResult>(ValidationResult.Initial) }
 
-            TagSection(
-                value = tagText,
-                onTagChange = {
-                    tagText = it
-                    validation = TaskValidator.validateTags(it)
-                },
-                validation = validation,
-            )
+            CustomTheme {
+                TagSection(
+                    value = tagText,
+                    onTagChange = {
+                        tagText = it
+                        validation = TaskValidator.validateTags(it)
+                    },
+                    validation = validation,
+                )
+            }
         }
 
         onNode(hasSetTextAction()).performTextInput("우아한,테크,메가커피,아이폰,컴포즈,하이하이")

@@ -20,7 +20,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
@@ -31,7 +30,7 @@ import kanbanboard.composeapp.generated.resources.Res
 import kanbanboard.composeapp.generated.resources.button_create_new_task
 import kanbanboard.composeapp.generated.resources.format_completion_rate
 import org.jetbrains.compose.resources.stringResource
-import woowacourse.kanban.board.ui.theme.Purple
+import woowacourse.kanban.board.ui.theme.CustomTheme
 
 @Composable
 fun KanbanHeader(
@@ -43,7 +42,8 @@ fun KanbanHeader(
     onClickCreate: () -> Unit = {},
 ) {
     Column(
-        modifier = modifier.fillMaxWidth().background(Color.White).border(width = 1.dp, color = Color(0xffE5E7EB))
+        modifier = modifier.fillMaxWidth().background(CustomTheme.colors.white)
+            .border(width = 1.dp, color = CustomTheme.colors.gray.w100)
             .padding(horizontal = 24.dp, vertical = 16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
@@ -58,7 +58,7 @@ fun KanbanHeader(
             ) {
                 Text(
                     text = title,
-                    color = Color(0xff101828),
+                    color = CustomTheme.colors.gray.w600,
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Medium,
                     modifier = Modifier.semantics { heading() },
@@ -84,8 +84,8 @@ private fun CreateNewTaskButton(onClickCreate: () -> Unit) {
         },
         shape = RoundedCornerShape(10.dp),
         colors = ButtonDefaults.buttonColors(
-            containerColor = Purple,
-            contentColor = Color.White,
+            containerColor = CustomTheme.colors.purple.w100,
+            contentColor = CustomTheme.colors.white,
         ),
         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 10.dp),
     ) {
@@ -108,8 +108,8 @@ private fun TaskProgressBar(modifier: Modifier = Modifier, completeRatio: Float)
         modifier = modifier
             .fillMaxWidth()
             .height(8.dp),
-        color = Color(0xFF4F39F6),
-        trackColor = Color(0xffE5E7EB),
+        color = CustomTheme.colors.purple.w100,
+        trackColor = CustomTheme.colors.gray.w100,
         drawStopIndicator = {},
         gapSize = 0.dp,
     )

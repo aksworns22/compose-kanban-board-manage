@@ -10,10 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import woowacourse.kanban.board.ui.theme.Gray
-import woowacourse.kanban.board.ui.theme.Gray500
-import woowacourse.kanban.board.ui.theme.Gray800
-import woowacourse.kanban.board.ui.theme.Red
+import woowacourse.kanban.board.ui.theme.CustomTheme
 
 @Composable
 fun SingleLineTextField(
@@ -32,14 +29,14 @@ fun SingleLineTextField(
         placeholder = {
             Text(
                 text = placeHolder,
-                color = Gray,
+                color = CustomTheme.colors.gray.w200,
             )
         },
         supportingText = {
             supportingText?.let {
                 Text(
                     text = it,
-                    color = if (isError) Red else Gray800,
+                    color = if (isError) CustomTheme.colors.red.w50 else CustomTheme.colors.gray.w500,
                 )
             }
         },
@@ -48,15 +45,15 @@ fun SingleLineTextField(
                 Icon(
                     imageVector = Icons.Default.Error,
                     contentDescription = "error",
-                    tint = Red,
+                    tint = CustomTheme.colors.red.w50,
                 )
             }
         },
         isError = isError,
         colors = OutlinedTextFieldDefaults.colors(
             unfocusedContainerColor = Color.Transparent,
-            unfocusedBorderColor = Gray500,
-            errorBorderColor = Red,
+            unfocusedBorderColor = CustomTheme.colors.purple.w300,
+            errorBorderColor = CustomTheme.colors.red.w50,
         ),
     )
 }

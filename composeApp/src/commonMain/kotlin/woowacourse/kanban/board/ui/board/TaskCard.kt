@@ -19,7 +19,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.positionInWindow
@@ -37,10 +36,7 @@ import woowacourse.kanban.board.domain.model.Task
 import woowacourse.kanban.board.domain.model.User
 import woowacourse.kanban.board.ui.component.Chip
 import woowacourse.kanban.board.ui.component.UserProfile
-import woowacourse.kanban.board.ui.theme.Gray100
-import woowacourse.kanban.board.ui.theme.Gray200
-import woowacourse.kanban.board.ui.theme.Gray600
-import woowacourse.kanban.board.ui.theme.Gray900
+import woowacourse.kanban.board.ui.theme.CustomTheme
 
 private const val TITLE_MAX_LINE = 1
 private const val CONTENT_MAX_LINE = 2
@@ -59,8 +55,8 @@ fun TaskCard(
     Column(
         modifier = modifier
             .clip(shape = RoundedCornerShape(10.dp))
-            .background(Color.White)
-            .border(width = 1.dp, shape = RoundedCornerShape(10.dp), color = Gray200)
+            .background(CustomTheme.colors.white)
+            .border(width = 1.dp, shape = RoundedCornerShape(10.dp), color = CustomTheme.colors.gray.w100)
             .onGloballyPositioned { cardWindowPosition = it.positionInWindow() }
             .pointerInput(Unit) {
                 detectDragGestures(
@@ -80,7 +76,7 @@ fun TaskCard(
         task.description?.let { content -> TaskDescription(content) }
         if (task.tags.items.isNotEmpty()) TaskTags(task.tags)
         Box {
-            HorizontalDivider(color = Gray100, thickness = 1.dp)
+            HorizontalDivider(color = CustomTheme.colors.gray.w50, thickness = 1.dp)
             UserProfile(task.user, Modifier.padding(10.dp))
         }
     }
@@ -92,7 +88,7 @@ private fun TaskTitle(title: String) {
         text = title,
         fontSize = 16.sp,
         fontWeight = FontWeight.W500,
-        color = Gray900,
+        color = CustomTheme.colors.gray.w600,
         maxLines = TITLE_MAX_LINE,
         overflow = TextOverflow.Ellipsis,
     )
@@ -104,7 +100,7 @@ private fun TaskDescription(description: String) {
         text = description,
         fontSize = 14.sp,
         fontWeight = FontWeight.W400,
-        color = Gray600,
+        color = CustomTheme.colors.blue.w600,
         maxLines = CONTENT_MAX_LINE,
         overflow = TextOverflow.Ellipsis,
     )

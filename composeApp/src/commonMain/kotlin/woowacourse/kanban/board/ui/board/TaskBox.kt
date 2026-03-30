@@ -37,6 +37,7 @@ import woowacourse.kanban.board.domain.model.Status
 import woowacourse.kanban.board.domain.model.Tags
 import woowacourse.kanban.board.domain.model.Task
 import woowacourse.kanban.board.domain.model.User
+import woowacourse.kanban.board.ui.theme.CustomTheme
 import woowacourse.kanban.board.ui.util.toUiString
 
 @Composable
@@ -65,7 +66,7 @@ fun TaskBox(
                 }
             }
             .then(
-                if (isDropTarget) modifier.border(2.dp, Color(0xFFFF0000), RoundedCornerShape(12.dp)) else modifier,
+                if (isDropTarget) modifier.border(2.dp, CustomTheme.colors.red.w50, RoundedCornerShape(12.dp)) else modifier,
             ),
     ) {
         Row(
@@ -74,11 +75,12 @@ fun TaskBox(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Text(stringResource(status.toUiString()), color = Color.White, fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
+            Text(stringResource(status.toUiString()), color = CustomTheme.colors.white, fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
             Text(
                 tasks.size.toString(),
-                modifier = Modifier.clip(RoundedCornerShape(100.dp)).background(Color.White).padding(horizontal = 10.dp, vertical = 4.dp),
-                color = Color.Black,
+                modifier = Modifier.clip(RoundedCornerShape(100.dp)).background(CustomTheme.colors.white)
+                    .padding(horizontal = 10.dp, vertical = 4.dp),
+                color = CustomTheme.colors.black,
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Medium,
             )
@@ -109,23 +111,24 @@ fun TaskBox(
 
 data class TaskBoxColor(val background: Color, val headerBackground: Color, val border: Color)
 
+@Composable
 fun Status.getBoxColor(): TaskBoxColor = when (this) {
     Status.TODO -> TaskBoxColor(
-        background = Color(0xffEFF6FF),
-        headerBackground = Color(0xff155DFC),
-        border = Color(0xffBEDBFF),
+        background = CustomTheme.colors.blue.w50,
+        headerBackground = CustomTheme.colors.blue.w300,
+        border = CustomTheme.colors.blue.w200,
     )
 
     Status.IN_PROGRESS -> TaskBoxColor(
-        background = Color(0xffFFFBEB),
-        headerBackground = Color(0xffE17100),
-        border = Color(0xffFEE685),
+        background = CustomTheme.colors.orange.w50,
+        headerBackground = CustomTheme.colors.orange.w200,
+        border = CustomTheme.colors.orange.w100,
     )
 
     Status.DONE -> TaskBoxColor(
-        background = Color(0xffF0FDF4),
-        headerBackground = Color(0xff00A63E),
-        border = Color(0xffB9F8CF),
+        background = CustomTheme.colors.green.w50,
+        headerBackground = CustomTheme.colors.green.w200,
+        border = CustomTheme.colors.green.w100,
     )
 }
 

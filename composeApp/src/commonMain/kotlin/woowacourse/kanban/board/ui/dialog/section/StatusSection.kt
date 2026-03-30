@@ -23,6 +23,7 @@ import kanbanboard.composeapp.generated.resources.label_status
 import org.jetbrains.compose.resources.stringResource
 import woowacourse.kanban.board.domain.model.Status
 import woowacourse.kanban.board.ui.component.Label
+import woowacourse.kanban.board.ui.theme.CustomTheme
 import woowacourse.kanban.board.ui.util.toUiString
 
 @Composable
@@ -65,15 +66,15 @@ fun StatusChip(modifier: Modifier = Modifier, status: Status, selectedStatus: St
         },
         colors = FilterChipDefaults.filterChipColors(
             containerColor = Color.White,
-            selectedContainerColor = Color(0xffEFF6FF),
-            selectedLabelColor = Color(0xff1447E6),
+            selectedContainerColor = CustomTheme.colors.blue.w50,
+            selectedLabelColor = CustomTheme.colors.blue.w400,
         ),
         modifier = modifier,
         border = FilterChipDefaults.filterChipBorder(
             enabled = true,
             selected = selectedStatus == status,
-            borderColor = Color.Gray,
-            selectedBorderColor = Color.Blue,
+            borderColor = CustomTheme.colors.gray.w400,
+            selectedBorderColor = CustomTheme.colors.blue.w500,
             borderWidth = 1.dp,
             selectedBorderWidth = 1.dp,
         ),

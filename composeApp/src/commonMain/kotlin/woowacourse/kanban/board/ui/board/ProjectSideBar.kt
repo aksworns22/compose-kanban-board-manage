@@ -14,7 +14,6 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
@@ -27,6 +26,7 @@ import kanbanboard.composeapp.generated.resources.Res
 import kanbanboard.composeapp.generated.resources.project_sidebar_subtitle
 import kanbanboard.composeapp.generated.resources.project_sidebar_title
 import org.jetbrains.compose.resources.stringResource
+import woowacourse.kanban.board.ui.theme.CustomTheme
 
 @Composable
 fun ProjectSideBar(
@@ -39,7 +39,7 @@ fun ProjectSideBar(
         modifier = modifier,
     ) {
         SideBarHeader(modifier = Modifier.padding(innerPadding))
-        HorizontalDivider(modifier = Modifier.height(1.dp).background(Color(0xffE5E7EB)))
+        HorizontalDivider(modifier = Modifier.height(1.dp).background(CustomTheme.colors.gray.w100))
         ProjectTabs(
             kanbanBoardState.allProjects,
             kanbanBoardState.currentProject,
@@ -56,13 +56,13 @@ private fun SideBarHeader(modifier: Modifier = Modifier) {
     ) {
         Text(
             text = stringResource(Res.string.project_sidebar_title),
-            color = Color(0xff101828),
+            color = CustomTheme.colors.gray.w600,
             fontSize = 18.sp,
             fontWeight = FontWeight.W600,
         )
         Text(
             text = stringResource(Res.string.project_sidebar_subtitle),
-            color = Color(0xff6A7282),
+            color = CustomTheme.colors.gray.w300,
             fontSize = 14.sp,
             fontWeight = FontWeight.W400,
         )
@@ -88,10 +88,10 @@ private fun ProjectTabs(
                 label = { Text(project.name, maxLines = 1, overflow = TextOverflow.Ellipsis) },
                 modifier = Modifier.fillMaxWidth().semantics { contentDescription = "${project.name} 전환 버튼" },
                 colors = FilterChipDefaults.filterChipColors(
-                    containerColor = Color.White,
-                    labelColor = Color(0xff364153),
-                    selectedContainerColor = Color(0xffEEF2FF),
-                    selectedLabelColor = Color(0xff432DD7),
+                    containerColor = CustomTheme.colors.white,
+                    labelColor = CustomTheme.colors.blue.w700,
+                    selectedContainerColor = CustomTheme.colors.blue.w100,
+                    selectedLabelColor = CustomTheme.colors.purple.w50,
                 ),
                 border = null,
                 elevation = FilterChipDefaults.elevatedFilterChipElevation(

@@ -21,9 +21,7 @@ import kanbanboard.composeapp.generated.resources.Res
 import kanbanboard.composeapp.generated.resources.button_cancel
 import kanbanboard.composeapp.generated.resources.button_create
 import org.jetbrains.compose.resources.stringResource
-import woowacourse.kanban.board.ui.theme.Gray300
-import woowacourse.kanban.board.ui.theme.Gray700
-import woowacourse.kanban.board.ui.theme.Purple
+import woowacourse.kanban.board.ui.theme.CustomTheme
 
 @Composable
 fun Footer(modifier: Modifier = Modifier, onClickCancel: () -> Unit, onClickConfirm: () -> Unit, enabled: Boolean = true) {
@@ -51,7 +49,7 @@ fun CancelButton(modifier: Modifier = Modifier, onClickCancel: () -> Unit, enabl
         enabled = enabled,
         colors = ButtonDefaults.buttonColors(
             containerColor = Color.Transparent,
-            contentColor = Gray700,
+            contentColor = CustomTheme.colors.blue.w700,
         ),
         contentPadding = PaddingValues(horizontal = 18.dp, vertical = 10.dp),
     ) {
@@ -73,10 +71,10 @@ fun ConfirmButton(modifier: Modifier = Modifier, onClickConfirm: () -> Unit, ena
         enabled = enabled,
         shape = RoundedCornerShape(10.dp),
         colors = ButtonDefaults.buttonColors(
-            containerColor = Purple,
-            contentColor = Color.White,
-            disabledContainerColor = Gray300,
-            disabledContentColor = Color.White,
+            containerColor = CustomTheme.colors.purple.w100,
+            contentColor = CustomTheme.colors.white,
+            disabledContainerColor = CustomTheme.colors.purple.w200,
+            disabledContentColor = CustomTheme.colors.white,
         ),
         contentPadding = PaddingValues(horizontal = 18.dp, vertical = 10.dp),
     ) {

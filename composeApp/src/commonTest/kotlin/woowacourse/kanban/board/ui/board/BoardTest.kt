@@ -13,6 +13,7 @@ import woowacourse.kanban.board.domain.model.Tag
 import woowacourse.kanban.board.domain.model.Tags
 import woowacourse.kanban.board.domain.model.Task
 import woowacourse.kanban.board.domain.model.User
+import woowacourse.kanban.board.ui.theme.CustomTheme
 
 @OptIn(ExperimentalTestApi::class)
 class BoardTest {
@@ -25,9 +26,11 @@ class BoardTest {
 
         // When B 프로젝트를 선택한다.
         setContent {
-            KanbanBoardScreen(
-                initialKanbanBoardState = state,
-            )
+            CustomTheme {
+                KanbanBoardScreen(
+                    initialKanbanBoardState = state,
+                )
+            }
         }
         onNode(isHeading()).assertTextEquals("A 프로젝트")
         onNodeWithContentDescription(label = "B 프로젝트 전환 버튼").performClick()
@@ -49,9 +52,11 @@ class BoardTest {
 
         // When 사용자가 태스크를 드래그앤드롭한다
         setContent {
-            KanbanBoardScreen(
-                initialKanbanBoardState = state,
-            )
+            CustomTheme {
+                KanbanBoardScreen(
+                    initialKanbanBoardState = state,
+                )
+            }
         }
         val targetArea = onNodeWithContentDescription("Project SideBar").fetchSemanticsNode().boundsInWindow.center
         onNodeWithContentDescription("${task.status}상태의 ${task.title}태스크").performTouchInput {
@@ -76,9 +81,11 @@ class BoardTest {
 
         // When 사용자가 태스크를 드래그앤드롭한다
         setContent {
-            KanbanBoardScreen(
-                initialKanbanBoardState = state,
-            )
+            CustomTheme {
+                KanbanBoardScreen(
+                    initialKanbanBoardState = state,
+                )
+            }
         }
         val baseTouchOffset = onNodeWithContentDescription("${task.status}상태의 ${task.title}태스크").fetchSemanticsNode().boundsInWindow.center
         val targetTouchOffset = onNodeWithContentDescription("${Status.TODO} 태스크 목록").fetchSemanticsNode().boundsInWindow.center
@@ -105,9 +112,11 @@ class BoardTest {
 
         // When 사용자가 태스크를 드롭한다
         setContent {
-            KanbanBoardScreen(
-                initialKanbanBoardState = state,
-            )
+            CustomTheme {
+                KanbanBoardScreen(
+                    initialKanbanBoardState = state,
+                )
+            }
         }
         val baseTouchOffset = onNodeWithContentDescription("${task.status}상태의 ${task.title}태스크").fetchSemanticsNode().boundsInWindow.center
         val targetTouchOffset = onNodeWithContentDescription("${Status.IN_PROGRESS} 태스크 목록").fetchSemanticsNode().boundsInWindow.center

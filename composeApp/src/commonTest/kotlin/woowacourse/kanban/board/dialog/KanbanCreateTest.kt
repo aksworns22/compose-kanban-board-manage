@@ -11,6 +11,7 @@ import androidx.compose.ui.test.runComposeUiTest
 import kotlin.test.Test
 import woowacourse.kanban.board.domain.model.User
 import woowacourse.kanban.board.ui.dialog.TaskCreateForm
+import woowacourse.kanban.board.ui.theme.CustomTheme
 
 @OptIn(ExperimentalTestApi::class)
 class KanbanCreateTest {
@@ -18,13 +19,15 @@ class KanbanCreateTest {
     @Test
     fun `제목과 태그에 오류가 없고 제목이 공백이 아닐 경우 활성화된다`() = runComposeUiTest {
         setContent {
-            TaskCreateForm(
-                onDismiss = {},
-                assignees = listOf(
-                    User("우테코"), User("테코"),
-                ),
-                onClickCreate = { _, _, _, _, _ -> },
-            )
+            CustomTheme {
+                TaskCreateForm(
+                    onDismiss = {},
+                    assignees = listOf(
+                        User("우테코"), User("테코"),
+                    ),
+                    onClickCreate = { _, _, _, _, _ -> },
+                )
+            }
         }
         onAllNodes(hasSetTextAction())[0]
             .performTextInput("할 일")
@@ -39,13 +42,15 @@ class KanbanCreateTest {
     @Test
     fun `제목 에러 발생시 비활성화된다`() = runComposeUiTest {
         setContent {
-            TaskCreateForm(
-                onDismiss = {},
-                assignees = listOf(
-                    User("우테코"), User("테코"),
-                ),
-                onClickCreate = { _, _, _, _, _ -> },
-            )
+            CustomTheme {
+                TaskCreateForm(
+                    onDismiss = {},
+                    assignees = listOf(
+                        User("우테코"), User("테코"),
+                    ),
+                    onClickCreate = { _, _, _, _, _ -> },
+                )
+            }
         }
 
         onAllNodes(hasSetTextAction())[0]
@@ -61,13 +66,15 @@ class KanbanCreateTest {
     @Test
     fun `태그 에러 발생시 비활성화된다`() = runComposeUiTest {
         setContent {
-            TaskCreateForm(
-                onDismiss = {},
-                assignees = listOf(
-                    User("우테코"), User("테코"),
-                ),
-                onClickCreate = { _, _, _, _, _ -> },
-            )
+            CustomTheme {
+                TaskCreateForm(
+                    onDismiss = {},
+                    assignees = listOf(
+                        User("우테코"), User("테코"),
+                    ),
+                    onClickCreate = { _, _, _, _, _ -> },
+                )
+            }
         }
 
         onAllNodes(hasSetTextAction())[1]

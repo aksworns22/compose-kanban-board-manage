@@ -12,11 +12,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import woowacourse.kanban.board.ui.theme.Gray100
-import woowacourse.kanban.board.ui.theme.Gray700
+import woowacourse.kanban.board.ui.theme.CustomTheme
 
 @Composable
-fun Chip(content: String, modifier: Modifier = Modifier, textColor: Color = Gray700, backgroundColor: Color = Gray100) {
+fun Chip(
+    content: String,
+    modifier: Modifier = Modifier,
+    textColor: Color = CustomTheme.colors.blue.w700,
+    backgroundColor: Color = CustomTheme.colors.gray.w50,
+) {
     Text(
         text = content,
         fontSize = 12.sp,

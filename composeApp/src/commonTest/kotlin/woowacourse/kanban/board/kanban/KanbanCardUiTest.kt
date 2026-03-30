@@ -11,6 +11,7 @@ import woowacourse.kanban.board.domain.model.Tags
 import woowacourse.kanban.board.domain.model.Task
 import woowacourse.kanban.board.domain.model.User
 import woowacourse.kanban.board.ui.board.TaskCard
+import woowacourse.kanban.board.ui.theme.CustomTheme
 
 @OptIn(ExperimentalTestApi::class)
 class KanbanCardUiTest {
@@ -22,7 +23,9 @@ class KanbanCardUiTest {
         val user = User(name = "다이노")
 
         setContent {
-            TaskCard(Task(title = title, description = content, tags = tags, user = user, status = Status.TODO))
+            CustomTheme {
+                TaskCard(Task(title = title, description = content, tags = tags, user = user, status = Status.TODO))
+            }
         }
 
         onNodeWithText(title).assertIsDisplayed()

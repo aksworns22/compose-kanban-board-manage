@@ -14,6 +14,7 @@ import kotlin.test.Test
 import woowacourse.kanban.board.domain.validator.TaskValidator
 import woowacourse.kanban.board.domain.validator.ValidationResult
 import woowacourse.kanban.board.ui.dialog.section.TitleSection
+import woowacourse.kanban.board.ui.theme.CustomTheme
 
 @OptIn(ExperimentalTestApi::class)
 class TitleTextFieldTest {
@@ -24,14 +25,16 @@ class TitleTextFieldTest {
             var title by remember { mutableStateOf("") }
             var validation by remember { mutableStateOf<ValidationResult>(ValidationResult.Initial) }
 
-            TitleSection(
-                value = title,
-                onTitleChange = {
-                    title = it
-                    validation = TaskValidator.validateTitle(it)
-                },
-                validation = validation,
-            )
+            CustomTheme {
+                TitleSection(
+                    value = title,
+                    onTitleChange = {
+                        title = it
+                        validation = TaskValidator.validateTitle(it)
+                    },
+                    validation = validation,
+                )
+            }
         }
 
         onNodeWithText("제목을 입력해주세요.", useUnmergedTree = true)

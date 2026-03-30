@@ -23,6 +23,7 @@ import org.jetbrains.compose.resources.stringResource
 import woowacourse.kanban.board.domain.model.User
 import woowacourse.kanban.board.ui.component.Label
 import woowacourse.kanban.board.ui.component.UserProfile
+import woowacourse.kanban.board.ui.theme.CustomTheme
 
 @Composable
 fun AssigneeSection(modifier: Modifier = Modifier, managers: List<User>, selectedUser: User, onUserChange: (User) -> Unit) {
@@ -61,15 +62,15 @@ fun AssigneeChip(assignee: User, selected: Boolean, onUserChange: () -> Unit, mo
         },
         colors = FilterChipDefaults.filterChipColors(
             containerColor = Color.White,
-            selectedContainerColor = Color(0xffEFF6FF),
-            selectedLabelColor = Color(0xff1447E6),
+            selectedContainerColor = CustomTheme.colors.blue.w50,
+            selectedLabelColor = CustomTheme.colors.blue.w400,
         ),
         modifier = modifier,
         border = FilterChipDefaults.filterChipBorder(
             enabled = true,
             selected = selected,
-            borderColor = Color.Gray,
-            selectedBorderColor = Color.Blue,
+            borderColor = CustomTheme.colors.gray.w400,
+            selectedBorderColor = CustomTheme.colors.blue.w500,
             borderWidth = 1.dp,
             selectedBorderWidth = 1.dp,
         ),

@@ -16,15 +16,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.kanban.board.domain.model.User
-import woowacourse.kanban.board.ui.theme.Gray400
-import woowacourse.kanban.board.ui.theme.Gray700
+import woowacourse.kanban.board.ui.theme.CustomTheme
 
 @Composable
 fun UserProfile(user: User, modifier: Modifier = Modifier) {
@@ -36,13 +34,13 @@ fun UserProfile(user: User, modifier: Modifier = Modifier) {
         Box(
             modifier = Modifier
                 .size(24.dp).clip(CircleShape)
-                .background(color = Color.White)
-                .border(width = 2.dp, color = Gray400, shape = CircleShape),
+                .background(color = CustomTheme.colors.white)
+                .border(width = 2.dp, color = CustomTheme.colors.red.w100, shape = CircleShape),
         ) {
             Icon(
                 imageVector = Icons.Default.AccountBox,
                 contentDescription = "profile image",
-                tint = Gray400,
+                tint = CustomTheme.colors.red.w100,
                 modifier = Modifier.clip(CircleShape).requiredSize(size = 33.dp),
             )
         }
@@ -50,7 +48,7 @@ fun UserProfile(user: User, modifier: Modifier = Modifier) {
             text = user.name,
             fontWeight = FontWeight.W500,
             fontSize = 14.sp,
-            color = Gray700,
+            color = CustomTheme.colors.blue.w700,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
         )

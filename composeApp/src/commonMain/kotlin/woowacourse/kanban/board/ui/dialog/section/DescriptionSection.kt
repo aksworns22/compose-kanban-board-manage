@@ -16,9 +16,7 @@ import kanbanboard.composeapp.generated.resources.description_placeholder
 import kanbanboard.composeapp.generated.resources.label_description
 import org.jetbrains.compose.resources.stringResource
 import woowacourse.kanban.board.ui.component.Label
-import woowacourse.kanban.board.ui.theme.Gray
-import woowacourse.kanban.board.ui.theme.Gray500
-import woowacourse.kanban.board.ui.theme.Red
+import woowacourse.kanban.board.ui.theme.CustomTheme
 
 @Composable
 fun DescriptionSection(modifier: Modifier = Modifier, value: String, onContentChange: (String) -> Unit) {
@@ -36,14 +34,14 @@ fun DescriptionSection(modifier: Modifier = Modifier, value: String, onContentCh
             placeholder = {
                 Text(
                     text = stringResource(Res.string.description_placeholder),
-                    color = Gray,
+                    color = CustomTheme.colors.gray.w200,
                 )
             },
             minLines = 6,
             colors = OutlinedTextFieldDefaults.colors(
                 unfocusedContainerColor = Color.Transparent,
-                unfocusedBorderColor = Gray500,
-                errorBorderColor = Red,
+                unfocusedBorderColor = CustomTheme.colors.purple.w300,
+                errorBorderColor = CustomTheme.colors.red.w50,
             ),
         )
     }

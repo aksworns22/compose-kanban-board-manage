@@ -7,6 +7,7 @@ import androidx.compose.ui.test.runComposeUiTest
 import kotlin.test.Test
 import woowacourse.kanban.board.domain.model.User
 import woowacourse.kanban.board.ui.component.UserProfile
+import woowacourse.kanban.board.ui.theme.CustomTheme
 
 @OptIn(ExperimentalTestApi::class)
 class UserProfileUiTest {
@@ -15,9 +16,11 @@ class UserProfileUiTest {
     fun `전달된 유저 이름 표시`() = runComposeUiTest {
         val given = "다이노"
         setContent {
-            UserProfile(
-                User(given),
-            )
+            CustomTheme {
+                UserProfile(
+                    User(given),
+                )
+            }
         }
 
         onNodeWithText(given).assertIsDisplayed()
