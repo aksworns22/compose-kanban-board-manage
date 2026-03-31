@@ -1,40 +1,59 @@
-This is a Kotlin Multiplatform project targeting Android, Desktop (JVM).
+# 🚀 1단계 - 칸반 보드 관리(프로젝트)
 
-* [/composeApp](./composeApp/src) is for code that will be shared across your Compose Multiplatform applications.
-  It contains several subfolders:
-  - [commonMain](./composeApp/src/commonMain/kotlin) is for code that’s common for all targets.
-  - Other folders are for Kotlin code that will be compiled for only the platform indicated in the folder name.
-    For example, if you want to use Apple’s CoreCrypto for the iOS part of your Kotlin app,
-    the [iosMain](./composeApp/src/iosMain/kotlin) folder would be the right place for such calls.
-    Similarly, if you want to edit the Desktop (JVM) specific part, the [jvmMain](./composeApp/src/jvmMain/kotlin)
-    folder is the appropriate location.
+## 기능 목록
 
-### Build and Run Android Application
+_[피그마 시안](https://www.figma.com/design/3aBG3UfkTwmHM8BnPyahtT/8%EA%B8%B0-Android-%EB%A0%88%EB%B2%A81-%EB%AF%B8%EC%85%98-%EB%94%94%EC%9E%90%EC%9D%B8?node-id=23136-23&t=xCxwxtFTp8FpfgFV-1)
+에 맞춰 UI를 구성한다._
 
-To build and run the development version of the Android app, use the run configuration from the run widget
-in your IDE’s toolbar or build it directly from the terminal:
-- on macOS/Linux
-  ```shell
-  ./gradlew :composeApp:assembleDebug
-  ```
-- on Windows
-  ```shell
-  .\gradlew.bat :composeApp:assembleDebug
-  ```
+### 사이드바
 
-### Build and Run Desktop (JVM) Application
+- [X] 칸반 보드 프로젝트 탭을 화면 좌측에 표시한다.
+    - [x] 프로젝트 이름이 너무 길면 ellipsis로 표시한다.
+- [x] 선택한 프로젝트에 대한 칸반 보드를 보여준다.
 
-To build and run the development version of the desktop app, use the run configuration from the run widget
-in your IDE’s toolbar or run it directly from the terminal:
-- on macOS/Linux
-  ```shell
-  ./gradlew :composeApp:run
-  ```
-- on Windows
-  ```shell
-  .\gradlew.bat :composeApp:run
-  ```
+### 태스크 이동
 
----
+- [x] 드래그 앤 드롭으로 태스크 상태를 변경한다.
+- [x] 상태 변경 시 스낵바를 표시한다.
 
-Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html)…
+## 테스트
+
+- [x] 사용자가 프로젝트 선택하면 해당하는 해당 프로젝트 화면으로 전환된다
+    ```gherkin
+    Scenario: 사용자가 프로젝트를 전환하려는 상황
+        Given 현재 프로젝트가 A프로젝트
+        When B 프로젝트를 선택한다.
+        Then B 프로젝트에 대한 태스크 목록이 표시된다
+    ```
+
+- [x] 태스크박스가 아닌 곳에 드롭할 경우 상태가 바뀌지 않는다
+
+    ```gherkin
+    Scenario: 사용자가 태스크의 상태를 전환하려는 상황
+        Given TODO 상태의 A 태스크가 있다
+        When 사용자가 태스크를 사이드바로 드래그앤드롭한다
+        Then TODO 상태 태스크 박스에 A태스크가 표시된다
+    ```
+
+- [x] 동일한 상태의 태스크박스에 드롭할 경우 상태가 바뀌지 않는다
+    ```gherkin
+    Scenario: 사용자가 태스크의 상태를 전환하려는 상황
+        Given TODO 상태의 A 태스크가 있다
+        When 사용자가 태스크를 TODO 테스크 박스로 드래그앤드롭한다
+        Then TODO 상태 태스크 박스에 A태스크가 표시된다
+    ```
+
+- [x] 다른 상태의 태스크박스에 드롭할 경우 해당 상태로 변경한다
+    ```gherkin
+    Scenario: 사용자가 태스크의 상태를 전환하려는 상황
+        Given TODO 상태의 A 태스크가 있다
+        When 사용자가 태스크를 IN_PROGRESS 테스크 박스로 드래그앤드롭한다
+        Then TODO 상태 태스크 박스에서 A태스크가 사라지고, IN_PROGRESS 상태 태스크 박스에 A태스크가 표시된다
+    ```
+
+## 프로그래밍 요구 사항
+
+- 여러 번 그려지지 않아도 되는 뷰는 매번 리컴포지션 되지 않아야 한다.
+- 적절한 테스트 방법을 활용하여 기능 요구 사항을 테스트한다.
+- 모든 요구 사항이 테스트 가능하진 않다. 스스로 판단해서 구분한다.
+- 프로젝트 생성을 위한 뷰는 없다. 가짜 데이터와 테스트 더블을 활용한다.

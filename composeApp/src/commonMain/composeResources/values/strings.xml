@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Create Dialog -->
+
+    <!-- Header -->
+    <string name="create_dialog_title">새 태스크 생성</string>
+    <string name="create_dialog_close">태스크 종료</string>
+
+    <!-- Footer -->
+    <string name="button_cancel">취소</string>
+    <string name="button_create">생성</string>
+
+    <!-- Title Section -->
+    <string name="label_title">제목</string>
+    <string name="title_placeholder">태스크 제목을 입력하세요.</string>
+
+    <!-- Description Section -->
+    <string name="label_description">설명</string>
+    <string name="description_placeholder">태스크에 대한 자세한 설명을 입력하세요</string>
+
+    <!-- Tag Section -->
+    <string name="label_tag">태그</string>
+    <string name="tag_placeholder">태그를 쉼표로 구분하여 입력하세요 (예: 버그,긴급)</string>
+    <string name="tag_supporting_text">%1$d자 이내의 태그를 최대 %2$d개까지 등록할 수 있습니다.</string>
+
+    <!-- Status&Assignee Section-->
+    <string name="label_status">상태</string>
+    <string name="label_assignee">담당자</string>
+    <string name="status_todo">To Do</string>
+    <string name="status_in_progress">In Progress</string>
+    <string name="status_done">Done</string>
+
+    <!-- Validation Error -->
+    <string name="error_title_blank">제목을 입력해주세요.</string>
+    <string name="error_tag_invalid_format">태그 형식이 올바르지 않습니다.</string>
+    <string name="error_tag_invalid_length">태그는 %1$d자 이내로 %2$d개까지만 등록할 수 있습니다.</string>
+    <string name="error_tag_count_exceeded">태그는 %1$d자 이내로 %2$d개까지만 등록할 수 있습니다.</string>
+
+    <!-- KanbanBoard -->
+
+    <!-- Kanban Header -->
+    <string name="board_header_title">Compose Desktop 칸반 보드</string>
+    <string name="format_completion_rate">완료율: %1$d% (%2$d/%3$d)</string>
+    <string name="button_create_new_task">새 태스크 생성</string>
+
+    <!-- SnackBar Message -->
+    <string name="snackbar_create_new_task">새로운 태스크가 추가되었습니다.</string>
+    <string name="snackbar_error_create_new_task">오류가 발생하였습니다.</string>
+    <string name="snackbar_unknown_error">알 수 없는 에러가 발생하였습니다.</string>
+    <string name="snackbar_move_task">태스크가 이동되었습니다.</string>
+
+    <!-- Project Side Bar -->
+    <string name="project_sidebar_title">프로젝트</string>
+    <string name="project_sidebar_subtitle">4주차 미션 보드</string>
+</resources>
+
