@@ -1,3 +1,69 @@
+# 🚀 2단계 - 칸반 보드 관리(수정)
+
+## ui 테스트 목록
+
+```gherkin
+Scenario: 태스크 수정 다이어로그에서 Todo 상태면서 담당자가 없음 상태에서 In Progress 상태로 수정하려는 상황
+    Given Todo 상태가 선택되어 있고 담당자가 없음인 상태
+    When In Progress 상태를 클릭한다
+    Then 첫 번째 담당자가 자동으로 선택되고 In Progress 상태로 바뀐다
+```
+
+```gherkin
+Scenario: Todo 상태면서 담당자가 지정되지 않은 태스크카드를 In Progress 상태로 이동하려는 상황
+    Given Todo 상태가 선택되어 있고 담당자가 없음 상태인 태스크
+    When 해당 태스크를 In Progress 상태로 드래그앤드롭한다
+    Then 태스크가 이동하지 않고 Todo 상태로 남아있다
+```
+
+```gherkin
+Scenario: Todo 상태면서 담당자가 지정된 태스크카드를 In Progress 상태로 이동하려는 상황
+    Given Todo 상태가 선택되어 있고 담당자가 존재하는 태스크
+    When 해당 태스크를 In Progress 상태로 드래그앤드롭한다
+    Then 태스크가 In Progress 상태로 변경된다
+```
+
+```gherkin
+Scenario: Todo(or In Progress) 태스크카드를 삭제하려는 상황
+    Given Todo(or In Progress) 상태의 태스크카드를 클릭한 상태
+    When 삭제 버튼을 클릭한다
+    Then 태스크 카드가 화면에 표시되지 않는다
+```
+
+```gherkin
+Scenario: Done(or Review) 태스크카드를 삭제하려는 상황
+    Given Done(or Review) 상태의 태스크카드를 클릭한 상태
+    When 삭제 버튼을 클릭한다
+    Then 태스크가 삭제되지 않고 화면에 표시된다
+```
+
+## 구현할 기능 목록
+
+- [ ] 피그마에 맞게 디자인을 적용한다
+
+### 태스크카드 수정/삭제 기능
+- [ ] 태스크카드를 클릭하면 수정 다이어로그가 표시된다.
+- [ ] To Do 상태의 태스크만 담당자 없음 상태가 허용된다.
+    - To Do 상태일 때 수정 다이어로그에 담당자에 없음 버튼이 표시된다.
+    - In Progress, Review, Done 상태의 태스크는 담당자가 항상 존재해야한다.
+- [ ] To Do 상태면서 담당자가 없을 경우 다른 상태로 수정 시 첫번째 담당자로 기본 선택된다.
+- [ ] To Do, In Progress 상태의 태스크만 삭제가 허용된다.
+- [ ] Review, Done 상태에서 태스크의 삭제는 불가능하다.
+    - 불가능을 알리는 스낵바를 표시한다 
+- [ ] 삭제 버튼을 클릭하면 해당하는 태스크가 삭제된다.
+- [ ] 삭제가 수행되면 스낵바가 표시된다.
+- [ ] 수정이 수행되면 스낵바가 표시된다.
+
+### 태스크 상태 전이 규칙
+- [ ] Review 상태가 추가된다
+- [ ] To Do 상태에서는 In Progress로만 전이가 가능하다
+- [ ] 담당자가 지정되지 않았다면 In Progress로 전이가 불가능하다
+- [ ] In Progress 상태에서는 To Do와 Review로만 전이가 가능하다
+    - 불가능을 알리는 스낵바를 표시한다
+- [ ] Review 상태에서는 In Progress와 Done으로만 전이가 가능하다
+- [ ] Done 상태에서는 To Do로만 전이가 가능하다
+- [ ] 불가능한 상태 전이가 발생하면 해당 상태로 옮길 수 없다는 스낵바를 표시한다.
+
 # 🚀 1단계 - 칸반 보드 관리(프로젝트)
 
 ## 기능 목록
