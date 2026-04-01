@@ -7,11 +7,9 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import woowacourse.kanban.board.domain.model.Status
 import woowacourse.kanban.board.domain.model.User
 import woowacourse.kanban.board.ui.dialog.section.AssigneeSection
 import woowacourse.kanban.board.ui.dialog.section.DescriptionSection
@@ -22,14 +20,7 @@ import woowacourse.kanban.board.ui.dialog.section.TagSection
 import woowacourse.kanban.board.ui.dialog.section.TitleSection
 
 @Composable
-fun TaskCreateForm(
-    modifier: Modifier = Modifier,
-    onDismiss: () -> Unit,
-    assignees: List<User>,
-    onClickCreate: (title: String, content: String, tags: List<String>, status: Status, assignee: User) -> Unit,
-) {
-    val uiState = remember { TaskCreateFormState(assignees) }
-
+fun TaskCreateForm(taskCreationState: TaskCreationState, onClickCreate: () -> Unit, onDismiss: () -> Unit, modifier: Modifier = Modifier) {
     Column(
         modifier = modifier,
     ) {
@@ -46,56 +37,48 @@ fun TaskCreateForm(
 
         ) {
             TitleSection(
-                value = uiState.title,
+                value = taskCreationState.validationState.title,
                 onTitleChange = {
-                    uiState.updateTitle(it)
+                    taskCreationState.validationState.updateTitle(it)
                 },
-                validation = uiState.titleValidation,
+                validation = taskCreationState.validationState.titleValidation,
             )
 
             DescriptionSection(
-                value = uiState.content,
+                value = taskCreationState.validationState.content,
                 onContentChange = {
-                    uiState.updateContent(it)
+                    taskCreationState.validationState.updateContent(it)
                 },
             )
 
             TagSection(
-                value = uiState.tag,
+                value = taskCreationState.validationState.tag,
                 onTagChange = {
-                    uiState.updateTag(it)
+                    taskCreationState.validationState.updateTag(it)
                 },
-                validation = uiState.tagValidation,
+                validation = taskCreationState.validationState.tagValidation,
             )
 
             StatusSection(
-                selectedStatus = uiState.selectedStatus,
+                selectedStatus = taskCreationState.validationState.selectedStatus,
                 onStatusChange = {
-                    uiState.updateStatus(it)
+                    taskCreationState.validationState.updateStatus(it)
                 },
             )
 
             AssigneeSection(
-                managers = uiState.assignees,
-                selectedUser = uiState.selectedAssignee,
+                managers = taskCreationState.validationState.assignees,
+                selectedUser = taskCreationState.validationState.selectedAssignee,
                 onUserChange = {
-                    uiState.updateAssignee(it)
+                    taskCreationState.validationState.updateAssignee(it)
                 },
             )
         }
         HorizontalDivider()
         Footer(
             onClickCancel = onDismiss,
-            onClickConfirm = {
-                onClickCreate(
-                    uiState.title,
-                    uiState.content,
-                    uiState.tag.split(",").filter { it.isNotEmpty() }.map { it.trim() },
-                    uiState.selectedStatus,
-                    uiState.selectedAssignee,
-                )
-            },
-            enabled = uiState.canCreate,
+            onClickConfirm = onClickCreate,
+            enabled = taskCreationState.canCreate,
         )
     }
 }
@@ -104,8 +87,13 @@ fun TaskCreateForm(
 @Preview(showBackground = true)
 private fun TaskCreateFormPreview() {
     TaskCreateForm(
-        onDismiss = {},
-        assignees = listOf(User("다이노"), User("다이노소어"), User("우우우")),
-        onClickCreate = { _, _, _, _, _ -> },
+        taskCreationState =
+        TaskCreationState(
+            TaskValidationState(
+                listOf(User("디이노"), User("제임스"), User("본드")),
+            ),
+        ),
+        onDismiss = { },
+        onClickCreate = { },
     )
 }

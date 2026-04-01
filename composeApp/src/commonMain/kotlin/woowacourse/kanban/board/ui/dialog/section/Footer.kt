@@ -65,9 +65,7 @@ fun CancelButton(modifier: Modifier = Modifier, onClickCancel: () -> Unit, enabl
 fun ConfirmButton(modifier: Modifier = Modifier, onClickConfirm: () -> Unit, enabled: Boolean = true) {
     Button(
         modifier = modifier,
-        onClick = {
-            onClickConfirm()
-        },
+        onClick = onClickConfirm,
         enabled = enabled,
         shape = RoundedCornerShape(10.dp),
         colors = ButtonDefaults.buttonColors(

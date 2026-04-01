@@ -28,7 +28,7 @@ class BoardTest {
         setContent {
             CustomTheme {
                 KanbanBoardScreen(
-                    initialKanbanBoardState = state,
+                    kanbanBoardState = state,
                 )
             }
         }
@@ -54,7 +54,7 @@ class BoardTest {
         setContent {
             CustomTheme {
                 KanbanBoardScreen(
-                    initialKanbanBoardState = state,
+                    kanbanBoardState = state,
                 )
             }
         }
@@ -83,7 +83,7 @@ class BoardTest {
         setContent {
             CustomTheme {
                 KanbanBoardScreen(
-                    initialKanbanBoardState = state,
+                    kanbanBoardState = state,
                 )
             }
         }
@@ -114,7 +114,7 @@ class BoardTest {
         setContent {
             CustomTheme {
                 KanbanBoardScreen(
-                    initialKanbanBoardState = state,
+                    kanbanBoardState = state,
                 )
             }
         }

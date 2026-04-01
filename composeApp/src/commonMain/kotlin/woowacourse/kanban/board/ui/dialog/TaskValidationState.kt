@@ -9,19 +9,19 @@ import woowacourse.kanban.board.domain.model.User
 import woowacourse.kanban.board.domain.validator.TaskValidator
 import woowacourse.kanban.board.domain.validator.ValidationResult
 
-class TaskCreateFormState(val assignees: List<User>) {
+class TaskValidationState(val assignees: List<User>) {
     var title by mutableStateOf("")
     val titleValidation: ValidationResult by derivedStateOf { TaskValidator.validateTitle(title) }
 
     var content by mutableStateOf("")
 
     var tag by mutableStateOf("")
+    val tags: List<String> get() = tag.split(",").filter { it.isNotEmpty() }.map { it.trim() }
     val tagValidation: ValidationResult by derivedStateOf { TaskValidator.validateTags(tag) }
 
     var selectedStatus by mutableStateOf(Status.TODO)
     var selectedAssignee by mutableStateOf(assignees.first())
 
-    val canCreate by derivedStateOf { titleValidation is ValidationResult.Valid && tagValidation !is ValidationResult.Invalid }
     fun updateTitle(input: String) {
         title = input
     }

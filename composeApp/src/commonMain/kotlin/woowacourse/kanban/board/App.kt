@@ -10,7 +10,7 @@ import woowacourse.kanban.board.ui.theme.CustomTheme
 fun App() {
     CustomTheme {
         KanbanBoardScreen(
-            initialKanbanBoardState = KanbanBoardState(
+            kanbanBoardState = KanbanBoardState(
                 KanbanProjectState("A 프로젝트"),
                 KanbanProjectState("B 프로젝트"),
                 KanbanProjectState("C 프로젝트"),

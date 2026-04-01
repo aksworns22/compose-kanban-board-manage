@@ -11,6 +11,8 @@ import androidx.compose.ui.test.runComposeUiTest
 import kotlin.test.Test
 import woowacourse.kanban.board.domain.model.User
 import woowacourse.kanban.board.ui.dialog.TaskCreateForm
+import woowacourse.kanban.board.ui.dialog.TaskCreationState
+import woowacourse.kanban.board.ui.dialog.TaskValidationState
 import woowacourse.kanban.board.ui.theme.CustomTheme
 
 @OptIn(ExperimentalTestApi::class)
@@ -21,11 +23,9 @@ class KanbanCreateTest {
         setContent {
             CustomTheme {
                 TaskCreateForm(
+                    taskCreationState = TaskCreationState(TaskValidationState(listOf(User("우테코"), User("테코")))),
                     onDismiss = {},
-                    assignees = listOf(
-                        User("우테코"), User("테코"),
-                    ),
-                    onClickCreate = { _, _, _, _, _ -> },
+                    onClickCreate = {},
                 )
             }
         }
@@ -44,11 +44,13 @@ class KanbanCreateTest {
         setContent {
             CustomTheme {
                 TaskCreateForm(
-                    onDismiss = {},
-                    assignees = listOf(
-                        User("우테코"), User("테코"),
+                    taskCreationState = TaskCreationState(
+                        TaskValidationState(
+                            listOf(User("우테코"), User("테코")),
+                        ),
                     ),
-                    onClickCreate = { _, _, _, _, _ -> },
+                    onDismiss = {},
+                    onClickCreate = { },
                 )
             }
         }
@@ -69,10 +71,12 @@ class KanbanCreateTest {
             CustomTheme {
                 TaskCreateForm(
                     onDismiss = {},
-                    assignees = listOf(
-                        User("우테코"), User("테코"),
+                    taskCreationState = TaskCreationState(
+                        TaskValidationState(
+                            listOf(User("우테코"), User("테코")),
+                        ),
                     ),
-                    onClickCreate = { _, _, _, _, _ -> },
+                    onClickCreate = { },
                 )
             }
         }
