@@ -25,6 +25,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import kanbanboard.composeapp.generated.resources.Res
 import kanbanboard.composeapp.generated.resources.button_cancel
+import kanbanboard.composeapp.generated.resources.button_delete
 import kanbanboard.composeapp.generated.resources.button_edit
 import kanbanboard.composeapp.generated.resources.edit_dialog_title
 import org.jetbrains.compose.resources.stringResource
@@ -43,7 +44,7 @@ import woowacourse.kanban.board.ui.dialog.section.TitleSection
 import woowacourse.kanban.board.ui.theme.CustomTheme
 
 @Composable
-fun TaskEditDialogScreen(task: Task, onDismiss: () -> Unit, onResult: (Result<Task>) -> Unit = { }) {
+fun TaskEditDialogScreen(task: Task, onDismiss: () -> Unit, onResult: (Result<Task>) -> Unit = { }, onClickDelete: () -> Unit) {
     val taskEditState = remember { TaskEditState(task, listOf(User("다이노"), User("다이노소어"), User("우우우"))) }
     Dialog(
         onDismissRequest = onDismiss,
@@ -56,6 +57,7 @@ fun TaskEditDialogScreen(task: Task, onDismiss: () -> Unit, onResult: (Result<Ta
             taskEditState = taskEditState,
             onDismiss = onDismiss,
             onClickEdit = { onResult(taskEditState.createEditedTask()) },
+            onClickDelete = onClickDelete,
             modifier = Modifier.fillMaxWidth(0.6f)
                 .fillMaxHeight(0.9f).clip(RoundedCornerShape(10.dp)).background(CustomTheme.colors.white),
         )
@@ -63,7 +65,13 @@ fun TaskEditDialogScreen(task: Task, onDismiss: () -> Unit, onResult: (Result<Ta
 }
 
 @Composable
-fun TaskEditDialogContent(taskEditState: TaskEditState, modifier: Modifier = Modifier, onDismiss: () -> Unit, onClickEdit: () -> Unit) {
+fun TaskEditDialogContent(
+    taskEditState: TaskEditState,
+    modifier: Modifier = Modifier,
+    onDismiss: () -> Unit,
+    onClickEdit: () -> Unit,
+    onClickDelete: () -> Unit,
+) {
     Column(
         modifier = modifier,
     ) {
@@ -140,6 +148,19 @@ fun TaskEditDialogContent(taskEditState: TaskEditState, modifier: Modifier = Mod
                 )
             }
             KanbanBoardButton(
+                onClick = onClickDelete,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = CustomTheme.colors.red.w50,
+                    contentColor = CustomTheme.colors.white,
+                ),
+            ) {
+                Text(
+                    text = stringResource(Res.string.button_delete),
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.W500,
+                )
+            }
+            KanbanBoardButton(
                 onClick = onClickEdit,
                 colors = ButtonDefaults.buttonColors(
                     containerColor = CustomTheme.colors.purple.w100,
@@ -178,6 +199,7 @@ private fun TaskEditContentPreview() {
             ),
             onDismiss = {},
             onClickEdit = {},
+            onClickDelete = {},
         )
     }
 }

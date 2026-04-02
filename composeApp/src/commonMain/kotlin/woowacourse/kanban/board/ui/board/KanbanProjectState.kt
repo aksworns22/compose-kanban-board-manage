@@ -22,4 +22,10 @@ class KanbanProjectState(val name: String, vararg tasks: Task) {
     fun editTask(originalTask: Task, newTask: Task) {
         tasks[tasks.indexOf(originalTask)] = newTask
     }
+
+    fun deleteTask(task: Task): Boolean {
+        if (task.status == Status.DONE) return false
+        tasks.remove(task)
+        return true
+    }
 }

@@ -123,7 +123,7 @@ fun CustomTheme(content: @Composable () -> Unit) {
             w900 = Color.Unspecified,
         ),
         red = ColorPalette(
-            w50 = Color(0xFFFF0000),
+            w50 = Color(0xffDB6365),
             w100 = Color(0xff838383),
             w200 = Color.Unspecified,
             w300 = Color.Unspecified,

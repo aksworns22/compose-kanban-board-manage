@@ -25,8 +25,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kanbanboard.composeapp.generated.resources.Res
 import kanbanboard.composeapp.generated.resources.snackbar_create_new_task
+import kanbanboard.composeapp.generated.resources.snackbar_delete_task
 import kanbanboard.composeapp.generated.resources.snackbar_edit_task
 import kanbanboard.composeapp.generated.resources.snackbar_move_task
+import kanbanboard.composeapp.generated.resources.snackbar_task_delete_error
 import kanbanboard.composeapp.generated.resources.snackbar_task_error
 import kanbanboard.composeapp.generated.resources.snackbar_unknown_error
 import org.jetbrains.compose.resources.getString
@@ -163,6 +165,14 @@ private fun TaskDialogScreen(
                     showSnackBar = showSnackBar,
                     onCloseDialog = onDismiss,
                 )
+            },
+            onClickDelete = {
+                if (kanbanProjectState.deleteTask(dialogType.task)) {
+                    showSnackBar(SnackBarEvent(strRes = Res.string.snackbar_delete_task))
+                } else {
+                    showSnackBar(SnackBarEvent(strRes = Res.string.snackbar_task_delete_error))
+                }
+                onDismiss()
             },
         )
     }
