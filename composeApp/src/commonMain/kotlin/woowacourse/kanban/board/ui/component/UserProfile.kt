@@ -31,32 +31,46 @@ fun UserProfile(user: User, modifier: Modifier = Modifier) {
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Box(
-            modifier = Modifier
-                .size(24.dp).clip(CircleShape)
-                .background(color = CustomTheme.colors.white)
-                .border(width = 2.dp, color = CustomTheme.colors.red.w100, shape = CircleShape),
-        ) {
-            Icon(
-                imageVector = Icons.Default.AccountBox,
-                contentDescription = "profile image",
-                tint = CustomTheme.colors.red.w100,
-                modifier = Modifier.clip(CircleShape).requiredSize(size = 33.dp),
-            )
+        when (user) {
+            is User.Assignee -> {
+                Box(
+                    modifier = Modifier
+                        .size(24.dp).clip(CircleShape)
+                        .background(color = CustomTheme.colors.white)
+                        .border(width = 2.dp, color = CustomTheme.colors.red.w100, shape = CircleShape),
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.AccountBox,
+                        contentDescription = "profile image",
+                        tint = CustomTheme.colors.red.w100,
+                        modifier = Modifier.clip(CircleShape).requiredSize(size = 33.dp),
+                    )
+                }
+                Text(
+                    text = user.name,
+                    fontWeight = FontWeight.W500,
+                    fontSize = 14.sp,
+                    color = CustomTheme.colors.blue.w700,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                )
+            }
+            User.None -> {
+                Text(
+                    text = "없음",
+                    fontWeight = FontWeight.W500,
+                    fontSize = 14.sp,
+                    color = CustomTheme.colors.blue.w700,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                )
+            }
         }
-        Text(
-            text = user.name,
-            fontWeight = FontWeight.W500,
-            fontSize = 14.sp,
-            color = CustomTheme.colors.blue.w700,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-        )
     }
 }
 
 @Preview(showBackground = true)
 @Composable
 private fun UserPreView() {
-    UserProfile(User("다이노"))
+    UserProfile(User.Assignee("다이노"))
 }

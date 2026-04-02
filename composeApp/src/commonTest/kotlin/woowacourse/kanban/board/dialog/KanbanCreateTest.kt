@@ -12,7 +12,6 @@ import kotlin.test.Test
 import woowacourse.kanban.board.domain.model.User
 import woowacourse.kanban.board.ui.dialog.TaskCreateForm
 import woowacourse.kanban.board.ui.dialog.TaskCreationState
-import woowacourse.kanban.board.ui.dialog.TaskValidationState
 import woowacourse.kanban.board.ui.theme.CustomTheme
 
 @OptIn(ExperimentalTestApi::class)
@@ -23,7 +22,7 @@ class KanbanCreateTest {
         setContent {
             CustomTheme {
                 TaskCreateForm(
-                    taskCreationState = TaskCreationState(TaskValidationState(listOf(User("우테코"), User("테코")))),
+                    taskCreationState = TaskCreationState(listOf(User.Assignee("우테코"), User.Assignee("테코"))),
                     onDismiss = {},
                     onClickCreate = {},
                 )
@@ -45,9 +44,7 @@ class KanbanCreateTest {
             CustomTheme {
                 TaskCreateForm(
                     taskCreationState = TaskCreationState(
-                        TaskValidationState(
-                            listOf(User("우테코"), User("테코")),
-                        ),
+                        listOf(User.Assignee("우테코"), User.Assignee("테코")),
                     ),
                     onDismiss = {},
                     onClickCreate = { },
@@ -72,9 +69,9 @@ class KanbanCreateTest {
                 TaskCreateForm(
                     onDismiss = {},
                     taskCreationState = TaskCreationState(
-                        TaskValidationState(
-                            listOf(User("우테코"), User("테코")),
-                        ),
+
+                        listOf(User.Assignee("우테코"), User.Assignee("테코")),
+
                     ),
                     onClickCreate = { },
                 )

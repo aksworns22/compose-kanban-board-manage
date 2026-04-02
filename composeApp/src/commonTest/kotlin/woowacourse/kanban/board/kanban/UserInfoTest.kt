@@ -11,7 +11,7 @@ class UserInfoTest {
         val given = ""
 
         assertFails {
-            User(
+            User.Assignee(
                 name = given,
             )
         }
@@ -22,7 +22,7 @@ class UserInfoTest {
         val given = "  "
 
         assertFails {
-            User(
+            User.Assignee(
                 name = given,
             )
         }
@@ -32,6 +32,6 @@ class UserInfoTest {
     fun `유저 이름이 공백이 아니면 생성 성공`() {
         val given = "다이노"
 
-        assertEquals(given, User(given).name)
+        assertEquals(given, User.Assignee(given).name)
     }
 }

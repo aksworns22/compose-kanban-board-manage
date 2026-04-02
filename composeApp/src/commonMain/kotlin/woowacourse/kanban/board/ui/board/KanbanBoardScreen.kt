@@ -34,6 +34,7 @@ import kanbanboard.composeapp.generated.resources.snackbar_unknown_error
 import org.jetbrains.compose.resources.getString
 import woowacourse.kanban.board.domain.model.Status
 import woowacourse.kanban.board.domain.model.Task
+import woowacourse.kanban.board.domain.model.User
 import woowacourse.kanban.board.ui.dialog.DialogState
 import woowacourse.kanban.board.ui.dialog.DialogType
 import woowacourse.kanban.board.ui.dialog.TaskCreateDialog
@@ -139,9 +140,13 @@ private fun TaskDialogScreen(
     onDismiss: () -> Unit,
     showSnackBar: (SnackBarEvent) -> Unit,
 ) {
+    // 월드 클래스 담당자들
+    val users =
+        listOf(User.None, User.Assignee("손흥민"), User.Assignee("봉준호"), User.Assignee("BTS"), User.Assignee("스마일"), User.Assignee("렛츠 고!"))
     when (dialogType) {
         DialogType.CreateTask -> {
             TaskCreateDialog(
+                users = users,
                 onDismiss = onDismiss,
                 onResult = { result ->
                     handleTaskCreationResult(
@@ -155,6 +160,7 @@ private fun TaskDialogScreen(
         }
 
         is DialogType.EditTask -> TaskEditDialogScreen(
+            users = users,
             onDismiss = onDismiss,
             task = dialogType.task,
             onResult = { result ->

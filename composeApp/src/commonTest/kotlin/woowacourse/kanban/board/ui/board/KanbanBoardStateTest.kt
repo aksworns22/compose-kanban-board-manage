@@ -6,7 +6,7 @@ import org.assertj.core.api.Assertions.assertThatThrownBy
 import woowacourse.kanban.board.domain.model.Status
 import woowacourse.kanban.board.domain.model.Tags
 import woowacourse.kanban.board.domain.model.Task
-import woowacourse.kanban.board.domain.model.User
+import woowacourse.kanban.board.domain.model.User.Assignee
 
 class KanbanBoardStateTest {
     @Test
@@ -67,7 +67,7 @@ class KanbanBoardStateTest {
 
         // when
         assertThat(project.totalCount).isEqualTo(0)
-        project.addTask(Task(title = "1번 태스크", tags = Tags(emptyList()), user = User("dino"), status = Status.TODO))
+        project.addTask(Task(title = "1번 태스크", tags = Tags(emptyList()), user = Assignee("dino"), status = Status.TODO))
 
         // then
         assertThat(project.totalCount).isEqualTo(1)
@@ -76,7 +76,7 @@ class KanbanBoardStateTest {
     @Test
     fun `프로젝트에 TODO 상태의 태스크를 IN_PROGRESS 상태로 변경하면 해당 태스크의 상태가 IN_PROGRESS로 변경된다`() {
         // given
-        val task = Task(title = "1번 태스크", tags = Tags(emptyList()), user = User("dino"), status = Status.TODO)
+        val task = Task(title = "1번 태스크", tags = Tags(emptyList()), user = Assignee("dino"), status = Status.TODO)
         val project = KanbanProjectState("0번 프로젝트", task)
         val expectedTask = task.copy(status = Status.IN_PROGRESS)
 

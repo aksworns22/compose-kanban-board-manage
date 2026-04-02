@@ -45,8 +45,15 @@ import woowacourse.kanban.board.ui.dialog.section.TitleSection
 import woowacourse.kanban.board.ui.theme.CustomTheme
 
 @Composable
-fun TaskEditDialogScreen(task: Task, onDismiss: () -> Unit, onResult: (Result<Task>) -> Unit = { }, onClickDelete: () -> Unit) {
-    val taskEditState = remember { TaskEditState(task, listOf(User("다이노"), User("다이노소어"), User("우우우"))) }
+fun TaskEditDialogScreen(
+    task: Task,
+    users: List<User>,
+    onDismiss: () -> Unit,
+    onResult: (Result<Task>) -> Unit = {
+    },
+    onClickDelete: () -> Unit,
+) {
+    val taskEditState = remember { TaskEditState(task, users) }
     Dialog(
         onDismissRequest = onDismiss,
         properties = DialogProperties(
@@ -126,10 +133,10 @@ fun TaskEditDialogContent(
             )
 
             AssigneeSection(
-                managers = taskEditState.validationState.assignees,
-                selectedUser = taskEditState.validationState.selectedAssignee,
+                userGroup = taskEditState.validationState.validUsers,
+                selectedUser = taskEditState.validationState.selectedUser,
                 onUserChange = {
-                    taskEditState.validationState.updateAssignee(it)
+                    taskEditState.validationState.updateUser(it)
                 },
             )
         }
@@ -194,10 +201,10 @@ private fun TaskEditContentPreview() {
                 originalTask = Task(
                     title = "제목",
                     tags = Tags(emptyList()),
-                    user = User("구루루"),
+                    user = User.Assignee("구루루"),
                     status = Status.TODO,
                 ),
-                assignees = listOf(User("구루루")),
+                users = listOf(User.Assignee("구루루")),
             ),
             onDismiss = {},
             onClickEdit = {},

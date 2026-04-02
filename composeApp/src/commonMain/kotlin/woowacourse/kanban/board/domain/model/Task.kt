@@ -10,5 +10,6 @@ data class Task(
 ) {
     init {
         require(title.isNotBlank()) { "제목이 비어있습니다." }
+        require(status == Status.TODO || user !is User.None) { "TODO 상태인 경우만 담당자를 지정하지 않을 수 있습니다" }
     }
 }

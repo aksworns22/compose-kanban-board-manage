@@ -18,8 +18,8 @@ import woowacourse.kanban.board.ui.theme.CustomTheme
 
 @Composable
 fun TaskCreateDialog(
-    assignees: List<User> = listOf(User("다이노"), User("다이노소어"), User("우우우")),
-    taskCreationState: TaskCreationState = remember { TaskCreationState(TaskValidationState(assignees)) },
+    users: List<User>,
+    taskCreationState: TaskCreationState = remember { TaskCreationState(users) },
     onDismiss: () -> Unit = { },
     onResult: (Result<Task>) -> Unit = {},
 ) {
@@ -46,5 +46,5 @@ fun TaskCreateDialog(
 @Composable
 @Preview(showBackground = true)
 private fun TaskCreateDialogPreview() {
-    TaskCreateDialog()
+    TaskCreateDialog(users = listOf(User.None, User.Assignee("손흥민"), User.Assignee("봉준호"), User.Assignee("BTS"), User.Assignee("스마일")))
 }

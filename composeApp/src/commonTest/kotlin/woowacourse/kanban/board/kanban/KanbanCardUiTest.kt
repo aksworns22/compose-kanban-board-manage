@@ -20,11 +20,11 @@ class KanbanCardUiTest {
         val title = "LazyColumn 컴포넌트 구현"
         val content = "세로 스크롤 가능한 리스트 컴포넌트를 만들고 성능 최적화를 적용합니다."
         val tags = Tags(listOf(Tag("컴포넌트"), Tag("성능")))
-        val user = User(name = "다이노")
+        val assignee = User.Assignee(name = "다이노")
 
         setContent {
             CustomTheme {
-                TaskCard(Task(title = title, description = content, tags = tags, user = user, status = Status.TODO))
+                TaskCard(Task(title = title, description = content, tags = tags, user = assignee, status = Status.TODO))
             }
         }
 
@@ -32,6 +32,6 @@ class KanbanCardUiTest {
         onNodeWithText(content).assertIsDisplayed()
         onNodeWithText("컴포넌트", useUnmergedTree = true).assertIsDisplayed()
         onNodeWithText("성능", useUnmergedTree = true).assertIsDisplayed()
-        onNodeWithText(user.name).assertIsDisplayed()
+        onNodeWithText(assignee.name).assertIsDisplayed()
     }
 }

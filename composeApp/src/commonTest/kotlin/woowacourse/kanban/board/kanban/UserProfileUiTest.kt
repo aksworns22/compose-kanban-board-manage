@@ -18,7 +18,7 @@ class UserProfileUiTest {
         setContent {
             CustomTheme {
                 UserProfile(
-                    User(given),
+                    User.Assignee(given),
                 )
             }
         }

@@ -45,7 +45,7 @@ class BoardTest {
         val task = Task(
             title = "A 태스크",
             tags = Tags(listOf(Tag("웃지마"))),
-            user = User("정준하"),
+            user = User.Assignee("정준하"),
             status = Status.TODO,
         )
         val state = KanbanBoardState(KanbanProjectState("A 프로젝트", task), KanbanProjectState("B 프로젝트"))
@@ -74,7 +74,7 @@ class BoardTest {
         val task = Task(
             title = "A 태스크",
             tags = Tags(listOf(Tag("웃지마"))),
-            user = User("정준하"),
+            user = User.Assignee("정준하"),
             status = Status.TODO,
         )
         val state = KanbanBoardState(KanbanProjectState("A 프로젝트", task), KanbanProjectState("B 프로젝트"))
@@ -105,7 +105,7 @@ class BoardTest {
         val task = Task(
             title = "A 태스크",
             tags = Tags(listOf(Tag("웃지마"))),
-            user = User("정준하"),
+            user = User.Assignee("정준하"),
             status = Status.TODO,
         )
         val state = KanbanBoardState(KanbanProjectState("A 프로젝트", task), KanbanProjectState("B 프로젝트"))

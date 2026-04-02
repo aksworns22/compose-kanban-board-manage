@@ -19,15 +19,15 @@ class KanbanProjectTest {
     @Before
     fun setUp() {
         toDoTask =
-            Task(title = "우리땅!", tags = Tags(emptyList()), status = Status.TODO, user = User("두릅"))
+            Task(title = "우리땅!", tags = Tags(emptyList()), status = Status.TODO, user = User.Assignee("두릅"))
         inProgressTask = Task(
             title = "우리땅!",
             tags = Tags(emptyList()),
             status = Status.IN_PROGRESS,
-            user = User("부릅"),
+            user = User.Assignee("부릅"),
         )
         doneTask =
-            Task(title = "우리땅!", tags = Tags(emptyList()), status = Status.DONE, user = User("꽈뚜릅"))
+            Task(title = "우리땅!", tags = Tags(emptyList()), status = Status.DONE, user = User.Assignee("꽈뚜릅"))
         project = KanbanProjectState(name = "독도는 우리땅", toDoTask, inProgressTask, doneTask)
     }
 
@@ -42,7 +42,7 @@ class KanbanProjectTest {
                 title = "tft 공략은? 두루루~",
                 tags = Tags(emptyList()),
                 status = Status.TODO,
-                user = User("두릅"),
+                user = User.Assignee("두릅"),
             ),
         )
 

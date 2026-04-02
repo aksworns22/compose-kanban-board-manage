@@ -9,8 +9,11 @@ import woowacourse.kanban.board.domain.model.User
 import woowacourse.kanban.board.domain.validator.TaskValidator
 import woowacourse.kanban.board.domain.validator.ValidationResult
 
-class TaskValidationState(val assignees: List<User>) {
+class TaskValidationState(private val users: List<User>) {
     var title by mutableStateOf("")
+
+    val validUsers: List<User> get() = if (selectedStatus == Status.TODO) users else users.filterIsInstance<User.Assignee>()
+
     val titleValidation: ValidationResult by derivedStateOf { TaskValidator.validateTitle(title) }
 
     var content by mutableStateOf("")
@@ -20,7 +23,9 @@ class TaskValidationState(val assignees: List<User>) {
     val tagValidation: ValidationResult by derivedStateOf { TaskValidator.validateTags(tag) }
 
     var selectedStatus by mutableStateOf(Status.TODO)
-    var selectedAssignee by mutableStateOf(assignees.first())
+    var selectedUser by mutableStateOf(defaultUser)
+
+    private val defaultUser: User get() = validUsers.first()
 
     fun updateTitle(input: String) {
         title = input
@@ -34,11 +39,15 @@ class TaskValidationState(val assignees: List<User>) {
         tag = input
     }
 
-    fun updateAssignee(user: User) {
-        selectedAssignee = user
+    fun updateUser(user: User) {
+        selectedUser = user
     }
 
     fun updateStatus(status: Status) {
+        val originalStatus = this.selectedStatus
         this.selectedStatus = status
+        if (originalStatus == Status.TODO && selectedUser is User.None) {
+            selectedUser = defaultUser
+        }
     }
 }

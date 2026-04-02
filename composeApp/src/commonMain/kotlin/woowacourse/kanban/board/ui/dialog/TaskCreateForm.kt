@@ -86,10 +86,10 @@ fun TaskCreateForm(taskCreationState: TaskCreationState, onClickCreate: () -> Un
             )
 
             AssigneeSection(
-                managers = taskCreationState.validationState.assignees,
-                selectedUser = taskCreationState.validationState.selectedAssignee,
+                userGroup = taskCreationState.validationState.validUsers,
+                selectedUser = taskCreationState.validationState.selectedUser,
                 onUserChange = {
-                    taskCreationState.validationState.updateAssignee(it)
+                    taskCreationState.validationState.updateUser(it)
                 },
             )
         }
@@ -134,9 +134,7 @@ private fun TaskCreateFormPreview() {
     TaskCreateForm(
         taskCreationState =
         TaskCreationState(
-            TaskValidationState(
-                listOf(User("디이노"), User("제임스"), User("본드")),
-            ),
+            listOf(User.Assignee("디이노"), User.Assignee("제임스"), User.Assignee("본드")),
         ),
         onDismiss = { },
         onClickCreate = { },
