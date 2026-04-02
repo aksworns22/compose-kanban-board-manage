@@ -17,6 +17,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -168,6 +169,7 @@ fun TaskEditDialogContent(
                     disabledContainerColor = CustomTheme.colors.purple.w200,
                     disabledContentColor = CustomTheme.colors.white,
                 ),
+                modifier = Modifier.testTag("수정 버튼"),
             ) {
                 Text(
                     text = stringResource(Res.string.button_edit),
