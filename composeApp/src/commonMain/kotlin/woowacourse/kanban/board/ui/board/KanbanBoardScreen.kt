@@ -236,5 +236,5 @@ private fun handleTaskCreationResult(
 @Composable
 @Preview
 private fun KanbanBoardScreenPreview() {
-    KanbanBoardScreen(kanbanBoardState = KanbanBoardState(KanbanProjectState(name = "허닛은 바보인가?")))
+    KanbanBoardScreen(kanbanBoardState = KanbanBoardState(KanbanProjectState(name = "허닛은 바보인가?", ::isTaskMovable)))
 }

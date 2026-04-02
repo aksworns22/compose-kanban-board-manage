@@ -57,20 +57,19 @@ Scenario: Done(or Review) 태스크카드를 삭제하려는 상황
     - In Progress, Review, Done 상태의 태스크는 담당자가 항상 존재해야한다.
 - [x] To Do 상태면서 담당자가 없을 경우 다른 상태로 수정 시 첫번째 담당자로 기본 선택된다.
 - [x] To Do, In Progress 상태의 태스크만 삭제가 허용된다.
-- [ ] Review, Done 상태에서 태스크의 삭제는 불가능하다.
+- [x] Review, Done 상태에서 태스크의 삭제는 불가능하다.
     - 불가능을 알리는 스낵바를 표시한다 
 - [x] 삭제 버튼을 클릭하면 해당하는 태스크가 삭제된다.
 - [x] 삭제가 수행되면 스낵바가 표시된다.
 - [x] 수정이 수행되면 스낵바가 표시된다.
 
 ### 태스크 상태 전이 규칙
-- [ ] Review 상태가 추가된다
-- [ ] To Do 상태에서는 In Progress로만 전이가 가능하다
-- [ ] 담당자가 지정되지 않았다면 In Progress로 전이가 불가능하다
-- [ ] In Progress 상태에서는 To Do와 Review로만 전이가 가능하다
-    - 불가능을 알리는 스낵바를 표시한다
-- [ ] Review 상태에서는 In Progress와 Done으로만 전이가 가능하다
-- [ ] Done 상태에서는 To Do로만 전이가 가능하다
+- [x] Review 상태가 추가된다
+- [x] To Do 상태에서는 In Progress로만 전이가 가능하다
+- [x] 담당자가 지정되지 않았다면 In Progress로 전이가 불가능하다
+- [x] In Progress 상태에서는 To Do와 Review로만 전이가 가능하다
+- [x] Review 상태에서는 In Progress와 Done으로만 전이가 가능하다
+- [x] Done 상태에서는 To Do로만 전이가 가능하다
 - [ ] 불가능한 상태 전이가 발생하면 해당 상태로 옮길 수 없다는 스낵바를 표시한다.
 
 # 🚀 1단계 - 칸반 보드 관리(프로젝트)

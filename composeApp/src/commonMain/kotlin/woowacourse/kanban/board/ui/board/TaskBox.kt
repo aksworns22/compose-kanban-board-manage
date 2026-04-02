@@ -132,6 +132,12 @@ fun Status.getBoxColor(): TaskBoxColor = when (this) {
         headerBackground = CustomTheme.colors.green.w200,
         border = CustomTheme.colors.green.w100,
     )
+
+    Status.REVIEW -> TaskBoxColor(
+        background = CustomTheme.colors.purple.w300,
+        headerBackground = CustomTheme.colors.purple.w200,
+        border = CustomTheme.colors.purple.w600,
+    )
 }
 
 @Preview

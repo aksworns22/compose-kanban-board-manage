@@ -7,6 +7,7 @@ import kanbanboard.composeapp.generated.resources.error_tag_invalid_length
 import kanbanboard.composeapp.generated.resources.error_title_blank
 import kanbanboard.composeapp.generated.resources.status_done
 import kanbanboard.composeapp.generated.resources.status_in_progress
+import kanbanboard.composeapp.generated.resources.status_review
 import kanbanboard.composeapp.generated.resources.status_todo
 import org.jetbrains.compose.resources.StringResource
 import woowacourse.kanban.board.domain.model.Status
@@ -23,4 +24,5 @@ fun Status.toUiString(): StringResource = when (this) {
     Status.TODO -> Res.string.status_todo
     Status.IN_PROGRESS -> Res.string.status_in_progress
     Status.DONE -> Res.string.status_done
+    Status.REVIEW -> Res.string.status_review
 }

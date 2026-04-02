@@ -17,7 +17,7 @@ class KanbanBoardScreenTest {
     fun `태스크 수정 다이어로그에서 Todo 상태면서 담당자가 있다면 Done 상태로 변경가능하다`() = runComposeUiTest {
         // given
         setContent {
-            KanbanBoardScreen(kanbanBoardState = KanbanBoardState(KanbanProjectState("테스트 프로젝트", toDoTaskWithAssignee)))
+            KanbanBoardScreen(kanbanBoardState = KanbanBoardState(KanbanProjectState("테스트 프로젝트", ::isTaskMovable, toDoTaskWithAssignee)))
         }
         onNodeWithContentDescription("${Status.TODO}상태의 ${toDoTaskWithAssignee.title}태스크").performClick()
 

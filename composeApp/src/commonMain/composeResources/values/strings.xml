@@ -32,6 +32,7 @@
     <string name="status_todo">To Do</string>
     <string name="status_in_progress">In Progress</string>
     <string name="status_done">Done</string>
+    <string name="status_review">Review</string>
 
     <!-- Validation Error -->
     <string name="error_title_blank">제목을 입력해주세요.</string>

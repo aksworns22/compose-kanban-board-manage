@@ -173,7 +173,7 @@ fun TaskEditDialogContent(
                 colors = ButtonDefaults.buttonColors(
                     containerColor = CustomTheme.colors.purple.w100,
                     contentColor = CustomTheme.colors.white,
-                    disabledContainerColor = CustomTheme.colors.purple.w200,
+                    disabledContainerColor = CustomTheme.colors.purple.w400,
                     disabledContentColor = CustomTheme.colors.white,
                 ),
                 modifier = Modifier.testTag("수정 버튼"),

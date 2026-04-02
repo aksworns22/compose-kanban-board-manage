@@ -107,7 +107,10 @@ private fun ProjectTabs(
 private fun ProjectSideBarPreview() {
     ProjectSideBar(
         modifier = Modifier.width(255.dp).fillMaxHeight(),
-        kanbanBoardState = KanbanBoardState(KanbanProjectState("Compose1"), KanbanProjectState("Compose2")),
+        kanbanBoardState = KanbanBoardState(
+            KanbanProjectState("Compose1", ::isTaskMovable),
+            KanbanProjectState("Compose2", ::isTaskMovable),
+        ),
         onProjectSelect = {},
     )
 }

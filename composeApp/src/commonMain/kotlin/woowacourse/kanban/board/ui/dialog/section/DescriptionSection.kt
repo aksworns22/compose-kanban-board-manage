@@ -40,7 +40,7 @@ fun DescriptionSection(modifier: Modifier = Modifier, value: String, onContentCh
             minLines = 6,
             colors = OutlinedTextFieldDefaults.colors(
                 unfocusedContainerColor = Color.Transparent,
-                unfocusedBorderColor = CustomTheme.colors.purple.w300,
+                unfocusedBorderColor = CustomTheme.colors.purple.w500,
                 errorBorderColor = CustomTheme.colors.red.w50,
             ),
         )

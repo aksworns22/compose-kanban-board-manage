@@ -3,8 +3,20 @@ package woowacourse.kanban.board.ui.board
 import androidx.compose.runtime.mutableStateListOf
 import woowacourse.kanban.board.domain.model.Status
 import woowacourse.kanban.board.domain.model.Task
+import woowacourse.kanban.board.domain.model.User
 
-class KanbanProjectState(val name: String, vararg tasks: Task) {
+fun isTaskMovable(targetTask: Task, destinationStatus: Status): Boolean {
+    val validTransitions = mapOf(
+        Status.TODO to listOf(Status.IN_PROGRESS),
+        Status.IN_PROGRESS to listOf(Status.TODO, Status.REVIEW),
+        Status.REVIEW to listOf(Status.IN_PROGRESS, Status.DONE),
+        Status.DONE to listOf(Status.TODO),
+    )
+    if (targetTask.status == Status.TODO && targetTask.user is User.None) return false
+    return validTransitions.getValue(targetTask.status).contains(destinationStatus)
+}
+
+class KanbanProjectState(val name: String, val isTaskMovable: (Task, Status) -> Boolean, vararg tasks: Task) {
 
     private val tasks: MutableList<Task> = mutableStateListOf(*tasks)
 
@@ -16,6 +28,7 @@ class KanbanProjectState(val name: String, vararg tasks: Task) {
         tasks.add(task)
     }
     fun changeTaskStatus(task: Task, newStatus: Status) {
+        if (!isTaskMovable(task, newStatus)) return
         tasks[tasks.indexOf(task)] = task.copy(status = newStatus)
     }
 
@@ -24,7 +37,7 @@ class KanbanProjectState(val name: String, vararg tasks: Task) {
     }
 
     fun deleteTask(task: Task): Boolean {
-        if (task.status == Status.DONE) return false
+        if (task.status in listOf(Status.DONE, Status.REVIEW)) return false
         tasks.remove(task)
         return true
     }
