@@ -28,7 +28,7 @@ class KanbanProjectTest {
         )
         doneTask =
             Task(title = "우리땅!", tags = Tags(emptyList()), status = Status.DONE, user = User.Assignee("꽈뚜릅"))
-        project = KanbanProjectState(name = "독도는 우리땅", ::isTaskMovable, toDoTask, inProgressTask, doneTask)
+        project = KanbanProjectState(name = "독도는 우리땅", toDoTask, inProgressTask, doneTask)
     }
 
     @Test
@@ -88,7 +88,7 @@ class KanbanProjectTest {
     @Test
     fun `프로젝트에 태스크가 없다면 완료율은 0이다`() {
         // given
-        val emptyProject = KanbanProjectState(name = "독도는 우리땅", ::isTaskMovable)
+        val emptyProject = KanbanProjectState(name = "독도는 우리땅")
 
         // then
         assertThat(emptyProject.completeRatio).isEqualTo(0f)

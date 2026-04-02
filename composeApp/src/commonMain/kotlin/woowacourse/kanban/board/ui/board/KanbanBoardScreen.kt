@@ -27,6 +27,8 @@ import kanbanboard.composeapp.generated.resources.Res
 import kanbanboard.composeapp.generated.resources.snackbar_create_new_task
 import kanbanboard.composeapp.generated.resources.snackbar_delete_task
 import kanbanboard.composeapp.generated.resources.snackbar_edit_task
+import kanbanboard.composeapp.generated.resources.snackbar_move_general_error
+import kanbanboard.composeapp.generated.resources.snackbar_move_no_assignee_error
 import kanbanboard.composeapp.generated.resources.snackbar_move_task
 import kanbanboard.composeapp.generated.resources.snackbar_task_delete_error
 import kanbanboard.composeapp.generated.resources.snackbar_task_error
@@ -110,10 +112,25 @@ fun KanbanBoardScreen(kanbanBoardState: KanbanBoardState) {
 
                     draggedTask?.let { task ->
                         if (targetStatus != null && task.status != targetStatus) {
-                            kanbanBoardState.currentProject.changeTaskStatus(task = task, newStatus = targetStatus)
-                            snackBarEvent = SnackBarEvent(
-                                strRes = Res.string.snackbar_move_task,
-                            )
+                            val movementResult = isTaskMovable(task, targetStatus)
+                            when (movementResult) {
+                                MovementResult.Success -> {
+                                    kanbanBoardState.currentProject.changeTaskStatus(task = task, newStatus = targetStatus)
+                                    snackBarEvent = SnackBarEvent(
+                                        strRes = Res.string.snackbar_move_task,
+                                    )
+                                }
+                                MovementResult.Failed -> {
+                                    snackBarEvent = SnackBarEvent(
+                                        strRes = Res.string.snackbar_move_general_error,
+                                    )
+                                }
+                                MovementResult.NoAssignee -> {
+                                    snackBarEvent = SnackBarEvent(
+                                        strRes = Res.string.snackbar_move_no_assignee_error,
+                                    )
+                                }
+                            }
                         }
                     }
                     resetDrag()
@@ -236,5 +253,5 @@ private fun handleTaskCreationResult(
 @Composable
 @Preview
 private fun KanbanBoardScreenPreview() {
-    KanbanBoardScreen(kanbanBoardState = KanbanBoardState(KanbanProjectState(name = "허닛은 바보인가?", ::isTaskMovable)))
+    KanbanBoardScreen(kanbanBoardState = KanbanBoardState(KanbanProjectState(name = "허닛은 바보인가?")))
 }
