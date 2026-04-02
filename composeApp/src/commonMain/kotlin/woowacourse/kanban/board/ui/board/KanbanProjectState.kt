@@ -18,4 +18,8 @@ class KanbanProjectState(val name: String, vararg tasks: Task) {
     fun changeTaskStatus(task: Task, newStatus: Status) {
         tasks[tasks.indexOf(task)] = task.copy(status = newStatus)
     }
+
+    fun editTask(originalTask: Task, newTask: Task) {
+        tasks[tasks.indexOf(originalTask)] = newTask
+    }
 }

@@ -29,19 +29,18 @@ fun TaskCreateDialog(
             dismissOnClickOutside = false,
             usePlatformDefaultWidth = false,
         ),
-        content = {
-            TaskCreateForm(
-                taskCreationState,
-                modifier = Modifier.fillMaxWidth(0.6f)
-                    .fillMaxHeight(0.9f).clip(RoundedCornerShape(10.dp)).background(CustomTheme.colors.white),
-                onDismiss = onDismiss,
-                onClickCreate = {
-                    val result = taskCreationState.createTask()
-                    onResult(result)
-                },
-            )
-        },
-    )
+    ) {
+        TaskCreateForm(
+            taskCreationState,
+            modifier = Modifier.fillMaxWidth(0.6f)
+                .fillMaxHeight(0.9f).clip(RoundedCornerShape(10.dp)).background(CustomTheme.colors.white),
+            onDismiss = onDismiss,
+            onClickCreate = {
+                val result = taskCreationState.createTask()
+                onResult(result)
+            },
+        )
+    }
 }
 
 @Composable

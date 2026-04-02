@@ -46,6 +46,7 @@ fun TaskBox(
     tasks: List<Task>,
     boxColor: TaskBoxColor,
     modifier: Modifier = Modifier,
+    onTaskClick: (Task) -> Unit = {},
     getIsDropTarget: () -> Boolean = { false },
     onBoundsChanged: (Rect) -> Unit = {},
     onTaskDragStart: (Task) -> Unit = {},
@@ -98,6 +99,7 @@ fun TaskBox(
             items(tasks, key = { it.id }) {
                 TaskCard(
                     task = it,
+                    onTaskClick = { onTaskClick(it) },
                     onDragStart = { onTaskDragStart(it) },
                     onDragChange = onTaskDragChange,
                     onDragEnd = onTaskDragEnd,

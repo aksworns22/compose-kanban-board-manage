@@ -4,15 +4,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
@@ -30,6 +27,7 @@ import kanbanboard.composeapp.generated.resources.Res
 import kanbanboard.composeapp.generated.resources.button_create_new_task
 import kanbanboard.composeapp.generated.resources.format_completion_rate
 import org.jetbrains.compose.resources.stringResource
+import woowacourse.kanban.board.ui.component.KanbanBoardButton
 import woowacourse.kanban.board.ui.theme.CustomTheme
 
 @Composable
@@ -65,7 +63,23 @@ fun KanbanHeader(
                 )
                 CompletionRateText(completeRatio, completeCount, totalCount)
             }
-            CreateNewTaskButton(onClickCreate = onClickCreate)
+            KanbanBoardButton(
+                onClick = onClickCreate,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = CustomTheme.colors.purple.w100,
+                    contentColor = CustomTheme.colors.white,
+                ),
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = "add",
+                )
+                Text(
+                    text = stringResource(Res.string.button_create_new_task),
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Normal,
+                )
+            }
         }
         TaskProgressBar(completeRatio = completeRatio)
     }
@@ -74,31 +88,6 @@ fun KanbanHeader(
 @Composable
 private fun CompletionRateText(completeRatio: Float, completeCount: Int, totalCount: Int) {
     Text(stringResource(Res.string.format_completion_rate, (completeRatio * 100).toInt(), completeCount, totalCount))
-}
-
-@Composable
-private fun CreateNewTaskButton(onClickCreate: () -> Unit) {
-    Button(
-        onClick = {
-            onClickCreate()
-        },
-        shape = RoundedCornerShape(10.dp),
-        colors = ButtonDefaults.buttonColors(
-            containerColor = CustomTheme.colors.purple.w100,
-            contentColor = CustomTheme.colors.white,
-        ),
-        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 10.dp),
-    ) {
-        Icon(
-            imageVector = Icons.Default.Add,
-            contentDescription = "add",
-        )
-        Text(
-            text = stringResource(Res.string.button_create_new_task),
-            fontSize = 16.sp,
-            fontWeight = FontWeight.Normal,
-        )
-    }
 }
 
 @Composable

@@ -2,6 +2,7 @@ package woowacourse.kanban.board.ui.board
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -45,6 +46,7 @@ private const val CONTENT_MAX_LINE = 2
 fun TaskCard(
     task: Task,
     modifier: Modifier = Modifier,
+    onTaskClick: () -> Unit = {},
     onDragStart: () -> Unit = {},
     onDragChange: (Offset) -> Unit = {},
     onDragEnd: () -> Unit = {},
@@ -57,6 +59,7 @@ fun TaskCard(
             .clip(shape = RoundedCornerShape(10.dp))
             .background(CustomTheme.colors.white)
             .border(width = 1.dp, shape = RoundedCornerShape(10.dp), color = CustomTheme.colors.gray.w100)
+            .clickable { onTaskClick() }
             .onGloballyPositioned { cardWindowPosition = it.positionInWindow() }
             .pointerInput(Unit) {
                 detectDragGestures(
