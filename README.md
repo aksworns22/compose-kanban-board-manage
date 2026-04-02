@@ -4,9 +4,18 @@
 
 ```gherkin
 Scenario: 태스크 수정 다이어로그에서 Todo 상태면서 담당자가 없음 상태에서 In Progress 상태로 수정하려는 상황
-    Given Todo 상태가 선택되어 있고 담당자가 없음인 상태
+    Given Todo 상태가 선택되어 있다
+    And  담당자가 지정되어 있지 않다
     When In Progress 상태를 클릭한다
     Then 첫 번째 담당자가 자동으로 선택되고 In Progress 상태로 바뀐다
+```
+
+```gherkin
+Scenario: 태스크 수정 다이어로그에서 Todo 상태면서 담당자가 있는 상태에서 Done 상태로 수정하려는 상황
+    Given Todo 상태가 선택되어 있다
+    And 담당자도 지정되어 있다
+    When Done 상태를 클릭한 후 수정 버튼을 클릭한다
+    Then 태스크가 Done 상태로 바뀐다
 ```
 
 ```gherkin
