@@ -77,6 +77,7 @@ fun TaskEditDialogScreen(
                         containerColor = CustomTheme.colors.red.w50,
                         contentColor = CustomTheme.colors.white,
                     ),
+                    modifier = Modifier.testTag("삭제 버튼"),
                 ) {
                     Text(
                         text = stringResource(Res.string.button_delete),

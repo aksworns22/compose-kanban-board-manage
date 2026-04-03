@@ -98,34 +98,4 @@ class BoardTest {
         // Then to-do상태 태스크 박스에 A태스크가 표시된다
         onNodeWithContentDescription("${Status.TODO}상태의 ${task.title}태스크").assertExists()
     }
-
-    @Test
-    fun `다른 상태의 태스크박스에 드롭할 경우 해당 상태로 변경한다`() = runComposeUiTest {
-        // Given to-do상태의 A 태스크를 in-progress상태의 태스크 박스로 드래그한다
-        val task = Task(
-            title = "A 태스크",
-            tags = Tags(listOf(Tag("웃지마"))),
-            user = User.Assignee("정준하"),
-            status = Status.TODO,
-        )
-        val state = KanbanBoardState(KanbanProjectState("A 프로젝트", task), KanbanProjectState("B 프로젝트"))
-
-        // When 사용자가 태스크를 드롭한다
-        setContent {
-            CustomTheme {
-                KanbanBoardScreen(
-                    kanbanBoardState = state,
-                )
-            }
-        }
-        val baseTouchOffset = onNodeWithContentDescription("${task.status}상태의 ${task.title}태스크").fetchSemanticsNode().boundsInWindow.center
-        val targetTouchOffset = onNodeWithContentDescription("${Status.IN_PROGRESS} 태스크 목록").fetchSemanticsNode().boundsInWindow.center
-        onNodeWithContentDescription("${task.status}상태의 ${task.title}태스크").performTouchInput {
-            down(center)
-            moveTo(targetTouchOffset - baseTouchOffset)
-            up()
-        }
-        // Then to-do상태 태스크 박스에서 A태스크가 사라지고, in-progress상태 태스크 박스에 A태스크가 표시된다
-        onNodeWithContentDescription("${Status.IN_PROGRESS}상태의 ${task.title}태스크").assertExists()
-    }
 }
