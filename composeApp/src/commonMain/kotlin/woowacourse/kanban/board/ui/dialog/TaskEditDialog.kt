@@ -29,7 +29,7 @@ fun TaskEditDialogScreen(
     task: Task,
     users: List<User>,
     onDismiss: () -> Unit,
-    onResult: (Result<Task>) -> Unit,
+    onEditResult: (Result<Task>) -> Unit,
     onClickDelete: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -86,7 +86,8 @@ fun TaskEditDialogScreen(
                     )
                 }
                 KanbanBoardButton(
-                    onClick = { onResult(taskCreationState.createTask()) },
+                    onClick = { onEditResult(taskCreationState.createTask()) },
+                    enabled = taskCreationState.canCreate,
                     colors = ButtonDefaults.buttonColors(
                         containerColor = CustomTheme.colors.purple.w100,
                         contentColor = CustomTheme.colors.white,

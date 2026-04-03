@@ -127,26 +127,12 @@ fun KanbanBoardScreen(
 
                     draggedTask?.let { task ->
                         if (targetStatus != null && task.status != targetStatus) {
-                            val movementResult = kanbanBoardState.currentProject.changeTaskStatus(task = task, newStatus = targetStatus)
-                            when (movementResult) {
-                                StatusTransitionResult.Success -> {
-                                    snackBarEvent = SnackBarEvent(
-                                        strRes = Res.string.snackbar_move_task,
-                                    )
-                                }
-
-                                StatusTransitionResult.Failed -> {
-                                    snackBarEvent = SnackBarEvent(
-                                        strRes = Res.string.snackbar_move_general_error,
-                                    )
-                                }
-
-                                StatusTransitionResult.NoAssignee -> {
-                                    snackBarEvent = SnackBarEvent(
-                                        strRes = Res.string.snackbar_move_no_assignee_error,
-                                    )
-                                }
-                            }
+                            handleTaskStatusTransition(
+                                projectState = kanbanBoardState.currentProject,
+                                task = task,
+                                targetStatus = targetStatus,
+                                showSnackBar = showSnackBar,
+                            )
                         }
                     }
                     resetDrag()
@@ -182,7 +168,7 @@ private fun TaskDialogScreen(
             TaskCreateDialog(
                 users = users,
                 onDismiss = onDismiss,
-                onResult = { result ->
+                onCreateResult = { result ->
                     handleTaskCreationResult(
                         result = result,
                         projectState = kanbanProjectState,
@@ -198,7 +184,7 @@ private fun TaskDialogScreen(
             users = users,
             onDismiss = onDismiss,
             task = dialogType.task,
-            onResult = { result ->
+            onEditResult = { result ->
                 handleTaskEditResult(
                     originalTask = dialogType.task,
                     result = result,
@@ -242,6 +228,40 @@ private fun handleTaskEditResult(
                 message = exception.message,
             ),
         )
+    }
+}
+
+private fun handleTaskStatusTransition(
+    task: Task,
+    targetStatus: Status,
+    projectState: KanbanProjectState,
+    showSnackBar: (SnackBarEvent) -> Unit,
+) {
+    val movementResult = projectState.changeTaskStatus(task = task, newStatus = targetStatus)
+    when (movementResult) {
+        StatusTransitionResult.Success -> {
+            showSnackBar(
+                SnackBarEvent(
+                    strRes = Res.string.snackbar_move_task,
+                ),
+            )
+        }
+
+        StatusTransitionResult.Failed -> {
+            showSnackBar(
+                SnackBarEvent(
+                    strRes = Res.string.snackbar_move_general_error,
+                ),
+            )
+        }
+
+        StatusTransitionResult.NoAssignee -> {
+            showSnackBar(
+                SnackBarEvent(
+                    strRes = Res.string.snackbar_move_no_assignee_error,
+                ),
+            )
+        }
     }
 }
 

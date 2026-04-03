@@ -29,7 +29,7 @@ fun TaskCreateDialog(
     modifier: Modifier = Modifier,
     taskCreationState: TaskCreationState = remember { TaskCreationState(users) },
     onDismiss: () -> Unit = { },
-    onResult: (Result<Task>) -> Unit = {},
+    onCreateResult: (Result<Task>) -> Unit = {},
 ) {
     Dialog(
         onDismissRequest = onDismiss,
@@ -69,10 +69,7 @@ fun TaskCreateDialog(
                     )
                 }
                 KanbanBoardButton(
-                    onClick = {
-                        val result = taskCreationState.createTask()
-                        onResult(result)
-                    },
+                    onClick = { onCreateResult(taskCreationState.createTask()) },
                     enabled = taskCreationState.canCreate,
                     colors = ButtonDefaults.buttonColors(
                         containerColor = CustomTheme.colors.purple.w100,
