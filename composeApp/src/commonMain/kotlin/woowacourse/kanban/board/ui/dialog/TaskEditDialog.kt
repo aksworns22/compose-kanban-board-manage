@@ -30,8 +30,6 @@ import kanbanboard.composeapp.generated.resources.button_delete
 import kanbanboard.composeapp.generated.resources.button_edit
 import kanbanboard.composeapp.generated.resources.edit_dialog_title
 import org.jetbrains.compose.resources.stringResource
-import woowacourse.kanban.board.domain.model.Status
-import woowacourse.kanban.board.domain.model.Tags
 import woowacourse.kanban.board.domain.model.Task
 import woowacourse.kanban.board.domain.model.User
 import woowacourse.kanban.board.ui.component.KanbanBoardButton
@@ -49,11 +47,10 @@ fun TaskEditDialogScreen(
     task: Task,
     users: List<User>,
     onDismiss: () -> Unit,
-    onResult: (Result<Task>) -> Unit = {
-    },
+    onResult: (Result<Task>) -> Unit = { },
     onClickDelete: () -> Unit,
 ) {
-    val taskEditState = remember { TaskEditState(task, users) }
+    val taskCreationState = remember { TaskCreationState(users).initialize(task) }
     Dialog(
         onDismissRequest = onDismiss,
         properties = DialogProperties(
@@ -62,9 +59,9 @@ fun TaskEditDialogScreen(
         ),
     ) {
         TaskEditDialogContent(
-            taskEditState = taskEditState,
+            taskCreationState = taskCreationState,
             onDismiss = onDismiss,
-            onClickEdit = { onResult(taskEditState.createEditedTask()) },
+            onClickEdit = { onResult(taskCreationState.createTask()) },
             onClickDelete = onClickDelete,
             modifier = Modifier.fillMaxWidth(0.6f)
                 .fillMaxHeight(0.9f).clip(RoundedCornerShape(10.dp)).background(CustomTheme.colors.white),
@@ -74,7 +71,7 @@ fun TaskEditDialogScreen(
 
 @Composable
 fun TaskEditDialogContent(
-    taskEditState: TaskEditState,
+    taskCreationState: TaskCreationState,
     modifier: Modifier = Modifier,
     onDismiss: () -> Unit,
     onClickEdit: () -> Unit,
@@ -101,42 +98,42 @@ fun TaskEditDialogContent(
                 .padding(24.dp),
             verticalArrangement = Arrangement.spacedBy(24.dp),
 
-        ) {
+            ) {
             TitleSection(
-                value = taskEditState.validationState.title,
+                value = taskCreationState.validationState.title,
                 onTitleChange = {
-                    taskEditState.validationState.updateTitle(it)
+                    taskCreationState.validationState.updateTitle(it)
                 },
-                validation = taskEditState.validationState.titleValidation,
+                validation = taskCreationState.validationState.titleValidation,
             )
 
             DescriptionSection(
-                value = taskEditState.validationState.content,
+                value = taskCreationState.validationState.content,
                 onContentChange = {
-                    taskEditState.validationState.updateContent(it)
+                    taskCreationState.validationState.updateContent(it)
                 },
             )
 
             TagSection(
-                value = taskEditState.validationState.tag,
+                value = taskCreationState.validationState.tag,
                 onTagChange = {
-                    taskEditState.validationState.updateTag(it)
+                    taskCreationState.validationState.updateTag(it)
                 },
-                validation = taskEditState.validationState.tagValidation,
+                validation = taskCreationState.validationState.tagValidation,
             )
 
             StatusSection(
-                selectedStatus = taskEditState.validationState.selectedStatus,
+                selectedStatus = taskCreationState.validationState.selectedStatus,
                 onStatusChange = {
-                    taskEditState.validationState.updateStatus(it)
+                    taskCreationState.validationState.updateStatus(it)
                 },
             )
 
             AssigneeSection(
-                userGroup = taskEditState.validationState.validUsers,
-                selectedUser = taskEditState.validationState.selectedUser,
+                userGroup = taskCreationState.validationState.validUsers,
+                selectedUser = taskCreationState.validationState.selectedUser,
                 onUserChange = {
-                    taskEditState.validationState.updateUser(it)
+                    taskCreationState.validationState.updateUser(it)
                 },
             )
         }
@@ -196,14 +193,7 @@ fun TaskEditDialogContent(
 private fun TaskEditContentPreview() {
     CustomTheme {
         TaskEditDialogContent(
-            taskEditState =
-            TaskEditState(
-                originalTask = Task(
-                    title = "제목",
-                    tags = Tags(emptyList()),
-                    user = User.Assignee("구루루"),
-                    status = Status.TODO,
-                ),
+            taskCreationState = TaskCreationState(
                 users = listOf(User.Assignee("구루루")),
             ),
             onDismiss = {},

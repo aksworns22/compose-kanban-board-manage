@@ -14,6 +14,15 @@ class TaskCreationState(users: List<User>) {
         validationState.titleValidation is ValidationResult.Valid && validationState.tagValidation !is ValidationResult.Invalid
     }
 
+    fun initialize(task: Task): TaskCreationState {
+        validationState.updateTitle(task.title)
+        validationState.updateContent(task.description ?: "")
+        validationState.updateTag(task.tags.items.joinToString(", ") { it.content })
+        validationState.updateStatus(task.status)
+        validationState.updateUser(task.user)
+        return this
+    }
+
     fun createTask(): Result<Task> {
         return TaskCreator.create(
             title = validationState.title,
