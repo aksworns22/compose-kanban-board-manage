@@ -112,10 +112,9 @@ fun KanbanBoardScreen(kanbanBoardState: KanbanBoardState) {
 
                     draggedTask?.let { task ->
                         if (targetStatus != null && task.status != targetStatus) {
-                            val movementResult = isTaskMovable(task, targetStatus)
+                            val movementResult = kanbanBoardState.currentProject.changeTaskStatus(task = task, newStatus = targetStatus)
                             when (movementResult) {
                                 MovementResult.Success -> {
-                                    kanbanBoardState.currentProject.changeTaskStatus(task = task, newStatus = targetStatus)
                                     snackBarEvent = SnackBarEvent(
                                         strRes = Res.string.snackbar_move_task,
                                     )
@@ -125,6 +124,7 @@ fun KanbanBoardScreen(kanbanBoardState: KanbanBoardState) {
                                         strRes = Res.string.snackbar_move_general_error,
                                     )
                                 }
+
                                 MovementResult.NoAssignee -> {
                                     snackBarEvent = SnackBarEvent(
                                         strRes = Res.string.snackbar_move_no_assignee_error,
