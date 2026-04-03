@@ -4,7 +4,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.VerticalDivider
@@ -17,6 +19,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.semantics.contentDescription
@@ -119,6 +122,7 @@ fun KanbanBoardScreen(kanbanBoardState: KanbanBoardState) {
                                         strRes = Res.string.snackbar_move_task,
                                     )
                                 }
+
                                 MovementResult.Failed -> {
                                     snackBarEvent = SnackBarEvent(
                                         strRes = Res.string.snackbar_move_general_error,
@@ -160,6 +164,8 @@ private fun TaskDialogScreen(
     // 월드 클래스 담당자들
     val users =
         listOf(User.None, User.Assignee("손흥민"), User.Assignee("봉준호"), User.Assignee("BTS"), User.Assignee("스마일"), User.Assignee("렛츠 고!"))
+    val dialogModifier = Modifier.fillMaxWidth(0.6f)
+        .fillMaxHeight(0.9f).clip(RoundedCornerShape(10.dp)).background(CustomTheme.colors.white)
     when (dialogType) {
         DialogType.CreateTask -> {
             TaskCreateDialog(
@@ -173,6 +179,7 @@ private fun TaskDialogScreen(
                         onCloseDialog = onDismiss,
                     )
                 },
+                modifier = dialogModifier,
             )
         }
 
@@ -197,6 +204,7 @@ private fun TaskDialogScreen(
                 }
                 onDismiss()
             },
+            modifier = dialogModifier,
         )
     }
 }
