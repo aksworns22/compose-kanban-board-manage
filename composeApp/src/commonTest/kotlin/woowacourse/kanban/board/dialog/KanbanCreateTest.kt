@@ -14,7 +14,7 @@ import woowacourse.kanban.board.ui.dialog.TaskCreateDialog
 import woowacourse.kanban.board.ui.theme.CustomTheme
 
 @OptIn(ExperimentalTestApi::class)
-class KanbanCreateDialogTest {
+class KanbanCreateTest {
     @Test
     fun `제목과 태그에 오류가 없고 제목이 공백이 아닐 경우 활성화된다`() = runComposeUiTest {
         setContent {

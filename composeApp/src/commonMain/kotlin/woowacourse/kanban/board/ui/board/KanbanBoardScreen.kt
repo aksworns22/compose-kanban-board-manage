@@ -48,7 +48,17 @@ import woowacourse.kanban.board.ui.theme.CustomTheme
 import woowacourse.kanban.board.ui.util.SnackBarEvent
 
 @Composable
-fun KanbanBoardScreen(kanbanBoardState: KanbanBoardState) {
+fun KanbanBoardScreen(
+    kanbanBoardState: KanbanBoardState,
+    users: List<User> = listOf(
+        User.None,
+        User.Assignee("손흥민"),
+        User.Assignee("봉준호"),
+        User.Assignee("BTS"),
+        User.Assignee("스마일"),
+        User.Assignee("렛츠 고!"),
+    ),
+) {
     val kanbanBoardState = remember { kanbanBoardState }
     val dialogState = remember { DialogState() }
     val snackBarHostState = remember { SnackbarHostState() }
@@ -83,6 +93,7 @@ fun KanbanBoardScreen(kanbanBoardState: KanbanBoardState) {
         val dialogType = dialogState.dialogType
         if (dialogType != null) {
             TaskDialogScreen(
+                users = users,
                 kanbanProjectState = kanbanBoardState.currentProject,
                 dialogType = dialogType,
                 onDismiss = dialogState::closeDialog,
@@ -157,13 +168,12 @@ fun KanbanBoardScreen(kanbanBoardState: KanbanBoardState) {
 @Composable
 private fun TaskDialogScreen(
     kanbanProjectState: KanbanProjectState,
+    users: List<User>,
     dialogType: DialogType,
     onDismiss: () -> Unit,
     showSnackBar: (SnackBarEvent) -> Unit,
 ) {
     // 월드 클래스 담당자들
-    val users =
-        listOf(User.None, User.Assignee("손흥민"), User.Assignee("봉준호"), User.Assignee("BTS"), User.Assignee("스마일"), User.Assignee("렛츠 고!"))
     val dialogModifier = Modifier.fillMaxWidth(0.6f)
         .fillMaxHeight(0.9f).clip(RoundedCornerShape(10.dp)).background(CustomTheme.colors.white)
     when (dialogType) {

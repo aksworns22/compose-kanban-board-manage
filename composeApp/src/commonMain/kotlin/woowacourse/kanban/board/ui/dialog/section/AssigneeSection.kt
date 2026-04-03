@@ -14,6 +14,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kanbanboard.composeapp.generated.resources.Res
@@ -39,6 +41,7 @@ fun AssigneeSection(modifier: Modifier = Modifier, userGroup: List<User>, select
                     user = user,
                     selected = user == selectedUser,
                     onUserChange = { onUserChange(user) },
+                    modifier = Modifier,
                 )
             }
         }
@@ -58,7 +61,7 @@ fun UserChip(user: User, selected: Boolean, onUserChange: () -> Unit, modifier: 
             selectedContainerColor = CustomTheme.colors.blue.w50,
             selectedLabelColor = CustomTheme.colors.blue.w400,
         ),
-        modifier = modifier,
+        modifier = modifier.testTag("$user 선택 버튼"),
         border = FilterChipDefaults.filterChipBorder(
             enabled = true,
             selected = selected,
