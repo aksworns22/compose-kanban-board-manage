@@ -3,6 +3,7 @@ package woowacourse.kanban.board.kanban
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFails
+import org.assertj.core.api.Assertions.assertThatThrownBy
 import woowacourse.kanban.board.domain.model.Status
 import woowacourse.kanban.board.domain.model.Tag
 import woowacourse.kanban.board.domain.model.Tags
@@ -10,6 +11,20 @@ import woowacourse.kanban.board.domain.model.Task
 import woowacourse.kanban.board.domain.model.User
 
 class CardTest {
+    @Test
+    fun `todo 상태가 아닌 경우 담당자가 지정되지 않으면 예외를 반환한다`() {
+        Status.entries.filter { it != Status.TODO }.forEach { status ->
+            assertThatThrownBy {
+                Task(
+                    title = "타이틀",
+                    description = "내용",
+                    tags = Tags(emptyList()),
+                    user = User.None,
+                    status = status,
+                )
+            }
+        }
+    }
 
     @Test
     fun `태그 개수가 5개 초과이면 예외`() {
