@@ -3,6 +3,8 @@ package woowacourse.kanban.board.ui.board
 import kotlin.test.Test
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.data.Offset
+import woowacourse.kanban.board.domain.StatusTransitionResult
+import woowacourse.kanban.board.domain.StatusTransitionRule
 import woowacourse.kanban.board.domain.model.Status
 import woowacourse.kanban.board.domain.model.Tags
 import woowacourse.kanban.board.domain.model.Task
@@ -102,6 +104,46 @@ class KanbanProjectTest {
         // then
         assertThat(project.getTasks(Status.DONE)).contains(doneTask)
         assertThat(project.getTasks(Status.REVIEW)).contains(reviewTask)
+    }
+
+    @Test
+    fun `전이 규칙이 success면 태스크의 상태가 변경된다`() {
+        // given
+        val onlySuccessRule = StatusTransitionRule { _, _ -> StatusTransitionResult.Success }
+        val project = KanbanProjectState(name = "독도는 우리땅", toDoTask)
+        val expectedTask = toDoTask.copy(status = Status.DONE)
+
+        // when
+        project.changeTaskStatus(toDoTask, Status.DONE, onlySuccessRule)
+
+        // then
+        assertThat(project.getTasks(Status.DONE)).contains(expectedTask)
+    }
+
+    @Test
+    fun `전이 규칙이 NoAssignee면 태스크의 상태가 변경되지 않는다`() {
+        // given
+        val onlyNoAssigneeRule = StatusTransitionRule { _, _ -> StatusTransitionResult.NoAssignee }
+        val project = KanbanProjectState(name = "독도는 우리땅", toDoTask)
+
+        // when
+        project.changeTaskStatus(toDoTask, Status.DONE, onlyNoAssigneeRule)
+
+        // then
+        assertThat(project.getTasks(Status.TODO)).contains(toDoTask)
+    }
+
+    @Test
+    fun `전이 규칙이 Failed면 태스크의 상태가 변경되지 않는다`() {
+        // given
+        val onlyFailedRule = StatusTransitionRule { _, _ -> StatusTransitionResult.Failed }
+        val project = KanbanProjectState(name = "독도는 우리땅", toDoTask)
+
+        // when
+        project.changeTaskStatus(toDoTask, Status.IN_PROGRESS, onlyFailedRule)
+
+        // then
+        assertThat(project.getTasks(Status.TODO)).contains(toDoTask)
     }
 
     private val toDoTask: Task = Task(title = "우리땅!", tags = Tags(emptyList()), status = Status.TODO, user = User.Assignee("두릅"))

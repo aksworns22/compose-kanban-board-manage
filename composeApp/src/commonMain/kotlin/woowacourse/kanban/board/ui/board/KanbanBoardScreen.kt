@@ -37,6 +37,7 @@ import kanbanboard.composeapp.generated.resources.snackbar_task_delete_error
 import kanbanboard.composeapp.generated.resources.snackbar_task_error
 import kanbanboard.composeapp.generated.resources.snackbar_unknown_error
 import org.jetbrains.compose.resources.getString
+import woowacourse.kanban.board.domain.StatusTransitionResult
 import woowacourse.kanban.board.domain.model.Status
 import woowacourse.kanban.board.domain.model.Task
 import woowacourse.kanban.board.domain.model.User
