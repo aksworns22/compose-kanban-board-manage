@@ -6,23 +6,23 @@ import woowacourse.kanban.board.domain.model.Task
 import woowacourse.kanban.board.domain.model.User
 
 fun interface StatusTransitionRule {
-    fun isMovable(targetTask: Task, destinationStatus: Status): MovementResult
+    fun isMovable(targetTask: Task, destinationStatus: Status): StatusTransitionResult
 }
 
-fun isTaskMovable(targetTask: Task, destinationStatus: Status): MovementResult {
+fun isTaskMovable(targetTask: Task, destinationStatus: Status): StatusTransitionResult {
     val validTransitions = mapOf(
         Status.TODO to listOf(Status.IN_PROGRESS),
         Status.IN_PROGRESS to listOf(Status.TODO, Status.REVIEW),
         Status.REVIEW to listOf(Status.IN_PROGRESS, Status.DONE),
         Status.DONE to listOf(Status.TODO),
     )
-    if (targetTask.status == Status.TODO && targetTask.user is User.None) return MovementResult.NoAssignee
+    if (targetTask.status == Status.TODO && targetTask.user is User.None) return StatusTransitionResult.NoAssignee
     return if (validTransitions.getValue(targetTask.status).contains(destinationStatus)) {
-        MovementResult.Success
-    } else MovementResult.Failed
+        StatusTransitionResult.Success
+    } else StatusTransitionResult.Failed
 }
 
-enum class MovementResult {
+enum class StatusTransitionResult {
     Success,
     Failed,
     NoAssignee,
@@ -43,12 +43,10 @@ class KanbanProjectState(val name: String, vararg tasks: Task) {
     fun changeTaskStatus(
         task: Task,
         newStatus: Status,
-        rule: StatusTransitionRule = StatusTransitionRule { targetTask, destinationStatus ->
-            isTaskMovable(targetTask, destinationStatus)
-        },
-    ): MovementResult {
+        rule: StatusTransitionRule = StatusTransitionRule(::isTaskMovable),
+    ): StatusTransitionResult {
         val movementResult = rule.isMovable(task, newStatus)
-        if (movementResult == MovementResult.Success) {
+        if (movementResult == StatusTransitionResult.Success) {
             tasks[tasks.indexOf(task)] = task.copy(status = newStatus)
         }
         return movementResult

@@ -3,7 +3,6 @@ package woowacourse.kanban.board.ui.board
 import kotlin.test.Test
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.data.Offset
-import org.junit.Before
 import woowacourse.kanban.board.domain.model.Status
 import woowacourse.kanban.board.domain.model.Tags
 import woowacourse.kanban.board.domain.model.Task
@@ -117,6 +116,6 @@ class KanbanProjectTest {
         title = "Review Task",
         tags = Tags(emptyList()),
         status = Status.REVIEW,
-        user = User.Assignee("스마일")
+        user = User.Assignee("스마일"),
     )
 }

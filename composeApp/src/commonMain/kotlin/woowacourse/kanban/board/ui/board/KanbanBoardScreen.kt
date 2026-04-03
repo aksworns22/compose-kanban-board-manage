@@ -128,19 +128,19 @@ fun KanbanBoardScreen(
                         if (targetStatus != null && task.status != targetStatus) {
                             val movementResult = kanbanBoardState.currentProject.changeTaskStatus(task = task, newStatus = targetStatus)
                             when (movementResult) {
-                                MovementResult.Success -> {
+                                StatusTransitionResult.Success -> {
                                     snackBarEvent = SnackBarEvent(
                                         strRes = Res.string.snackbar_move_task,
                                     )
                                 }
 
-                                MovementResult.Failed -> {
+                                StatusTransitionResult.Failed -> {
                                     snackBarEvent = SnackBarEvent(
                                         strRes = Res.string.snackbar_move_general_error,
                                     )
                                 }
 
-                                MovementResult.NoAssignee -> {
+                                StatusTransitionResult.NoAssignee -> {
                                     snackBarEvent = SnackBarEvent(
                                         strRes = Res.string.snackbar_move_no_assignee_error,
                                     )
