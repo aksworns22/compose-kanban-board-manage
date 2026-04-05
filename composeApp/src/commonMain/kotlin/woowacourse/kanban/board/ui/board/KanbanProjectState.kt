@@ -6,8 +6,9 @@ import woowacourse.kanban.board.domain.StatusTransitionRule
 import woowacourse.kanban.board.domain.checkDefaultStatusTransition
 import woowacourse.kanban.board.domain.model.Status
 import woowacourse.kanban.board.domain.model.Task
+import woowacourse.kanban.board.domain.model.User
 
-class KanbanProjectState(val name: String, vararg tasks: Task) {
+class KanbanProjectState(val name: String, val users: List<User>, vararg tasks: Task) {
 
     private val tasks: MutableList<Task> = mutableStateListOf(*tasks)
 

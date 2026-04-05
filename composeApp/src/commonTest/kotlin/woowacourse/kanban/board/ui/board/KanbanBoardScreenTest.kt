@@ -16,11 +16,14 @@ import woowacourse.kanban.board.domain.model.User
 
 @OptIn(ExperimentalTestApi::class)
 class KanbanBoardScreenTest {
+    private val userDruid = User.Assignee("두루이드")
+    private val users = listOf(User.None, userDruid)
+
     @Test
     fun `태스크 수정 다이어로그에서 Todo 상태면서 담당자가 있다면 Done 상태로 변경가능하다`() = runComposeUiTest {
         // given to-do 상태면서 담당자가 선택되어 있다
         setContent {
-            KanbanBoardScreen(kanbanBoardState = KanbanBoardState(KanbanProjectState("테스트 프로젝트", toDoTaskWithAssignee)))
+            KanbanBoardScreen(kanbanBoardState = KanbanBoardState(KanbanProjectState("테스트 프로젝트", users, toDoTaskWithAssignee)))
         }
         onNodeWithContentDescription("${Status.TODO}상태의 ${toDoTaskWithAssignee.title}태스크").performClick()
 
@@ -36,11 +39,9 @@ class KanbanBoardScreenTest {
     @Test
     fun `태스크 수정 다이어로그에서 Todo 상태면서 담당자가 없을 때 In progress를 클릭하면 첫 번째 담당자가 자동 선택된다`() = runComposeUiTest {
         // given to-do 상태면서 담당자 없음이 선택되어 있다
-        val userDruid = User.Assignee("두루이드")
         setContent {
             KanbanBoardScreen(
-                users = listOf(User.None, userDruid),
-                kanbanBoardState = KanbanBoardState(KanbanProjectState("테스트 프로젝트", toDoTaskWithoutAssignee)),
+                kanbanBoardState = KanbanBoardState(KanbanProjectState("테스트 프로젝트", users, toDoTaskWithoutAssignee)),
             )
         }
         onNodeWithContentDescription("${Status.TODO}상태의 ${toDoTaskWithoutAssignee.title}태스크").performClick()
@@ -59,7 +60,7 @@ class KanbanBoardScreenTest {
         // given to-do 상태가 선택되어 있고 담당자가 없음 상태인 태스크
         setContent {
             KanbanBoardScreen(
-                kanbanBoardState = KanbanBoardState(KanbanProjectState("테스트 프로젝트", toDoTaskWithoutAssignee)),
+                kanbanBoardState = KanbanBoardState(KanbanProjectState("테스트 프로젝트", users, toDoTaskWithoutAssignee)),
             )
         }
 
@@ -86,7 +87,10 @@ class KanbanBoardScreenTest {
         // Given to-do 상태가 선택되어 있고 담당자가 존재하는 태스크
         setContent {
             KanbanBoardScreen(
-                kanbanBoardState = KanbanBoardState(KanbanProjectState("A 프로젝트", toDoTaskWithAssignee), KanbanProjectState("B 프로젝트")),
+                kanbanBoardState = KanbanBoardState(
+                    KanbanProjectState(name = "A 프로젝트", users = users, toDoTaskWithAssignee),
+                    KanbanProjectState(name = "B 프로젝트", users = users),
+                ),
             )
         }
 
@@ -110,7 +114,10 @@ class KanbanBoardScreenTest {
         // Given to-do 상태의 태스크에 대한 다이어로그가 표시된 상태
         setContent {
             KanbanBoardScreen(
-                kanbanBoardState = KanbanBoardState(KanbanProjectState("A 프로젝트", toDoTaskWithAssignee), KanbanProjectState("B 프로젝트")),
+                kanbanBoardState = KanbanBoardState(
+                    KanbanProjectState("A 프로젝트", users, toDoTaskWithAssignee),
+                    KanbanProjectState("B 프로젝트", users),
+                ),
             )
         }
         onNodeWithContentDescription("${toDoTaskWithAssignee.status}상태의 ${toDoTaskWithAssignee.title}태스크").performClick()
@@ -127,7 +134,7 @@ class KanbanBoardScreenTest {
         // Given done 상태의 태스크에 대한 다이어로그가 표시된 상태
         setContent {
             KanbanBoardScreen(
-                kanbanBoardState = KanbanBoardState(KanbanProjectState("A 프로젝트", doneTask), KanbanProjectState("B 프로젝트")),
+                kanbanBoardState = KanbanBoardState(KanbanProjectState("A 프로젝트", users, doneTask), KanbanProjectState("B 프로젝트", users)),
             )
         }
         onNodeWithContentDescription("${doneTask.status}상태의 ${doneTask.title}태스크").performClick()

@@ -49,17 +49,7 @@ import woowacourse.kanban.board.ui.theme.CustomTheme
 import woowacourse.kanban.board.ui.util.SnackBarEvent
 
 @Composable
-fun KanbanBoardScreen(
-    kanbanBoardState: KanbanBoardState,
-    users: List<User> = listOf(
-        User.None,
-        User.Assignee("손흥민"),
-        User.Assignee("봉준호"),
-        User.Assignee("BTS"),
-        User.Assignee("스마일"),
-        User.Assignee("렛츠 고!"),
-    ),
-) {
+fun KanbanBoardScreen(kanbanBoardState: KanbanBoardState) {
     val kanbanBoardState = remember { kanbanBoardState }
     val dialogState = remember { DialogState() }
     val snackBarHostState = remember { SnackbarHostState() }
@@ -94,7 +84,7 @@ fun KanbanBoardScreen(
         val dialogType = dialogState.dialogType
         if (dialogType != null) {
             TaskDialogScreen(
-                users = users,
+                users = kanbanBoardState.currentProject.users,
                 kanbanProjectState = kanbanBoardState.currentProject,
                 dialogType = dialogType,
                 onDismiss = dialogState::closeDialog,
@@ -292,5 +282,19 @@ private fun handleTaskCreationResult(
 @Composable
 @Preview
 private fun KanbanBoardScreenPreview() {
-    KanbanBoardScreen(kanbanBoardState = KanbanBoardState(KanbanProjectState(name = "허닛은 바보인가?")))
+    KanbanBoardScreen(
+        kanbanBoardState = KanbanBoardState(
+            KanbanProjectState(
+                name = "허닛은 바보인가?",
+                users = listOf(
+                    User.None,
+                    User.Assignee("손흥민"),
+                    User.Assignee("봉준호"),
+                    User.Assignee("BTS"),
+                    User.Assignee("스마일"),
+                    User.Assignee("렛츠 고!"),
+                ),
+            ),
+        ),
+    )
 }

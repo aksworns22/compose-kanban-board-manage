@@ -26,6 +26,7 @@ import kanbanboard.composeapp.generated.resources.Res
 import kanbanboard.composeapp.generated.resources.project_sidebar_subtitle
 import kanbanboard.composeapp.generated.resources.project_sidebar_title
 import org.jetbrains.compose.resources.stringResource
+import woowacourse.kanban.board.domain.model.User
 import woowacourse.kanban.board.ui.theme.CustomTheme
 
 @Composable
@@ -105,11 +106,19 @@ private fun ProjectTabs(
 @Preview(showBackground = true)
 @Composable
 private fun ProjectSideBarPreview() {
+    val users = listOf(
+        User.None,
+        User.Assignee("손흥민"),
+        User.Assignee("봉준호"),
+        User.Assignee("BTS"),
+        User.Assignee("스마일"),
+        User.Assignee("렛츠 고!"),
+    )
     ProjectSideBar(
         modifier = Modifier.width(255.dp).fillMaxHeight(),
         kanbanBoardState = KanbanBoardState(
-            KanbanProjectState("Compose1"),
-            KanbanProjectState("Compose2"),
+            KanbanProjectState(name = "Compose1", users = users),
+            KanbanProjectState(name = "Compose2", users = users),
         ),
         onProjectSelect = {},
     )

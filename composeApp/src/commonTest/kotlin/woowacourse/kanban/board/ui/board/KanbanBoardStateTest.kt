@@ -20,9 +20,9 @@ class KanbanBoardStateTest {
     fun `3개의 프로젝트가 주어졌을 때 0번 프로젝트에서 1번 프로젝트로 이동하면 현재 프로젝트는 1번 프로젝트가 된다`() {
         // given
         val projects = arrayOf(
-            KanbanProjectState("0번 프로젝트"),
-            KanbanProjectState("1번 프로젝트"),
-            KanbanProjectState("2번 프로젝트"),
+            KanbanProjectState("0번 프로젝트", users = emptyList()),
+            KanbanProjectState("1번 프로젝트", users = emptyList()),
+            KanbanProjectState("2번 프로젝트", users = emptyList()),
         )
         val kanbanBoardState = KanbanBoardState(*projects)
 
@@ -37,7 +37,7 @@ class KanbanBoardStateTest {
     @Test
     fun `1개의 프로젝트가 주어졌을 때 0번 프로젝트에서 범위를 넘어가는 2번 프로젝트로 이동하면 현재 프로젝트는 변하지 않는다`() {
         // given
-        val project = KanbanProjectState("0번 프로젝트")
+        val project = KanbanProjectState("0번 프로젝트", users = emptyList())
         val kanbanBoardState = KanbanBoardState(project)
 
         // when
@@ -50,7 +50,7 @@ class KanbanBoardStateTest {
     @Test
     fun `1개의 프로젝트가 주어졌을 때 0번 프로젝트에서 음수 번호의 프로젝트로 이동하면 현재 프로젝트는 변하지 않는다`() {
         // given
-        val project = KanbanProjectState("0번 프로젝트")
+        val project = KanbanProjectState("0번 프로젝트", users = emptyList())
         val kanbanBoardState = KanbanBoardState(project)
 
         // when
@@ -63,7 +63,7 @@ class KanbanBoardStateTest {
     @Test
     fun `빈 프로젝트일 때 새로운 태스크를 1개 추가하면 전체 태스크 개수가 1개 늘어난다`() {
         // given
-        val project = KanbanProjectState("0번 프로젝트")
+        val project = KanbanProjectState("0번 프로젝트", users = emptyList())
 
         // when
         assertThat(project.totalCount).isEqualTo(0)
@@ -77,7 +77,7 @@ class KanbanBoardStateTest {
     fun `프로젝트에 TODO 상태의 태스크를 IN_PROGRESS 상태로 변경하면 해당 태스크의 상태가 IN_PROGRESS로 변경된다`() {
         // given
         val task = Task(title = "1번 태스크", tags = Tags(emptyList()), user = Assignee("dino"), status = Status.TODO)
-        val project = KanbanProjectState("0번 프로젝트", task)
+        val project = KanbanProjectState(name = "0번 프로젝트", users = emptyList(), task)
         val expectedTask = task.copy(status = Status.IN_PROGRESS)
 
         // when

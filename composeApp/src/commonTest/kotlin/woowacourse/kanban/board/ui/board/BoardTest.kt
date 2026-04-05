@@ -17,12 +17,16 @@ import woowacourse.kanban.board.ui.theme.CustomTheme
 
 @OptIn(ExperimentalTestApi::class)
 class BoardTest {
-
+    private val users = listOf(
+        User.Assignee("정준하"),
+        User.Assignee("유재석"),
+        User.Assignee("노홍철"),
+    )
     @Test
     fun `사용자가 프로젝트 선택하면 해당하는 해당 프로젝트 화면으로 전환된다`() = runComposeUiTest {
 
         // Given 현재 프로젝트가 A프로젝트
-        val state = KanbanBoardState(KanbanProjectState("A 프로젝트"), KanbanProjectState("B 프로젝트"))
+        val state = KanbanBoardState(KanbanProjectState("A 프로젝트", users), KanbanProjectState("B 프로젝트", users))
 
         // When B 프로젝트를 선택한다.
         setContent {
@@ -48,7 +52,7 @@ class BoardTest {
             user = User.Assignee("정준하"),
             status = Status.TODO,
         )
-        val state = KanbanBoardState(KanbanProjectState("A 프로젝트", task), KanbanProjectState("B 프로젝트"))
+        val state = KanbanBoardState(KanbanProjectState("A 프로젝트", users, task), KanbanProjectState("B 프로젝트", users))
 
         // When 사용자가 태스크를 드래그앤드롭한다
         setContent {
@@ -77,7 +81,7 @@ class BoardTest {
             user = User.Assignee("정준하"),
             status = Status.TODO,
         )
-        val state = KanbanBoardState(KanbanProjectState("A 프로젝트", task), KanbanProjectState("B 프로젝트"))
+        val state = KanbanBoardState(KanbanProjectState("A 프로젝트", users, task), KanbanProjectState("B 프로젝트", users))
 
         // When 사용자가 태스크를 드래그앤드롭한다
         setContent {

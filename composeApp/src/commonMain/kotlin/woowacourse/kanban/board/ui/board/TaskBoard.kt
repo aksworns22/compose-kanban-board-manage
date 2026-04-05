@@ -18,6 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.kanban.board.domain.model.Status
 import woowacourse.kanban.board.domain.model.Task
+import woowacourse.kanban.board.domain.model.User
 import woowacourse.kanban.board.ui.theme.CustomTheme
 
 @Composable
@@ -71,5 +72,16 @@ fun TaskBoard(
 @Preview(showBackground = true, widthDp = 800)
 @Composable
 private fun TaskBoardPreview() {
-    TaskBoard(kanbanBoardState = KanbanBoardState(KanbanProjectState(name = "스마일은 천재인가?")))
+    TaskBoard(
+        kanbanBoardState = KanbanBoardState(
+            KanbanProjectState(
+                name = "스마일은 천재인가?",
+                users = listOf(
+                    User.None,
+                    User.Assignee("손흥민"),
+                    User.Assignee("봉준호"),
+                ),
+            ),
+        ),
+    )
 }
