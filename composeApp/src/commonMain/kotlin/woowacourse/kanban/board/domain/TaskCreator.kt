@@ -7,7 +7,6 @@ import woowacourse.kanban.board.domain.model.Task
 import woowacourse.kanban.board.domain.model.User
 
 object TaskCreator {
-
     fun create(title: String, description: String, tags: List<String>, user: User, status: Status): Result<Task> {
         return try {
             val task = Task(title = title, description = description, tags = Tags(tags.map { Tag(it) }), user = user, status = status)

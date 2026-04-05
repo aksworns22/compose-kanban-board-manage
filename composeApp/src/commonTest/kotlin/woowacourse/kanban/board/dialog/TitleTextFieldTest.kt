@@ -30,7 +30,7 @@ class TitleTextFieldTest {
                     value = title,
                     onTitleChange = {
                         title = it
-                        validation = TaskValidator.validateTitle(it)
+                        validation = TaskValidator(emptyList()).validateTitle(it)
                     },
                     validation = validation,
                 )

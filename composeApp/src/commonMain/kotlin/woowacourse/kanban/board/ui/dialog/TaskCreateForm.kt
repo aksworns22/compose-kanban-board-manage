@@ -39,40 +39,40 @@ fun TaskCreateForm(
 
         ) {
             TitleSection(
-                value = taskCreationState.validationState.title,
+                value = taskCreationState.title,
                 onTitleChange = {
-                    taskCreationState.validationState.updateTitle(it)
+                    taskCreationState.updateTitle(it)
                 },
-                validation = taskCreationState.validationState.titleValidation,
+                validation = taskCreationState.titleValidation,
             )
 
             DescriptionSection(
-                value = taskCreationState.validationState.content,
+                value = taskCreationState.content,
                 onContentChange = {
-                    taskCreationState.validationState.updateContent(it)
+                    taskCreationState.updateContent(it)
                 },
             )
 
             TagSection(
-                value = taskCreationState.validationState.tag,
+                value = taskCreationState.tag,
                 onTagChange = {
-                    taskCreationState.validationState.updateTag(it)
+                    taskCreationState.updateTag(it)
                 },
-                validation = taskCreationState.validationState.tagValidation,
+                validation = taskCreationState.tagValidation,
             )
 
             StatusSection(
-                selectedStatus = taskCreationState.validationState.selectedStatus,
+                selectedStatus = taskCreationState.selectedStatus,
                 onStatusChange = {
-                    taskCreationState.validationState.updateStatus(it)
+                    taskCreationState.updateStatus(it)
                 },
             )
 
             AssigneeSection(
-                userGroup = taskCreationState.validationState.validUsers,
-                selectedUser = taskCreationState.validationState.selectedUser,
+                userGroup = taskCreationState.validUsers,
+                selectedUser = taskCreationState.selectedUser,
                 onUserChange = {
-                    taskCreationState.validationState.updateUser(it)
+                    taskCreationState.updateUser(it)
                 },
             )
         }

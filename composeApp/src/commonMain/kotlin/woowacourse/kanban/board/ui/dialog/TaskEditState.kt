@@ -11,23 +11,23 @@ import woowacourse.kanban.board.domain.model.User
 import woowacourse.kanban.board.domain.validator.TaskValidator
 import woowacourse.kanban.board.domain.validator.ValidationResult
 
-class TaskCreationState(private val users: List<User>, private val taskValidator: TaskValidator = TaskValidator(users)) {
-    var title by mutableStateOf("")
+class TaskEditState(private val users: List<User>, private val taskValidator: TaskValidator = TaskValidator(users), task: Task) {
+    var title by mutableStateOf(task.title)
+
     private val assignees = users.filterIsInstance<User.Assignee>()
     val validUsers: List<User>
         get() = if (selectedStatus == Status.TODO) users else assignees
+
     val titleValidation: ValidationResult by derivedStateOf { taskValidator.validateTitle(title) }
 
-    var content by mutableStateOf("")
+    var content by mutableStateOf(task.description ?: "")
 
-    var tag by mutableStateOf("")
+    var tag by mutableStateOf(task.tags.items.joinToString(", ") { it.content })
     val tags: List<String> get() = tag.split(",").filter { it.isNotEmpty() }.map { it.trim() }
     val tagValidation: ValidationResult by derivedStateOf { taskValidator.validateTags(tag) }
 
-    var selectedStatus by mutableStateOf(Status.TODO)
-    var selectedUser by mutableStateOf(defaultUser)
-
-    private val defaultUser: User get() = validUsers.first()
+    var selectedStatus by mutableStateOf(task.status)
+    var selectedUser by mutableStateOf(task.user)
 
     fun updateTitle(input: String) {
         title = input
@@ -47,18 +47,17 @@ class TaskCreationState(private val users: List<User>, private val taskValidator
 
     fun updateStatus(status: Status) {
         if (taskValidator.validateUser(status, selectedUser) is ValidationResult.Invalid) {
-            selectedUser = assignees.first()
+            selectedUser = validUsers.filterIsInstance<User.Assignee>().first()
         }
         selectedStatus = status
     }
 
-    val canCreate by derivedStateOf {
+    val canCreate: Boolean get() =
         titleValidation is ValidationResult.Valid &&
             tagValidation !is ValidationResult.Invalid &&
             taskValidator.validateUser(selectedStatus, selectedUser) !is ValidationResult.Invalid
-    }
 
-    fun createTask(): Result<Task> {
+    fun createEditedTask(): Result<Task> {
         return TaskCreator.create(
             title = title,
             description = content,

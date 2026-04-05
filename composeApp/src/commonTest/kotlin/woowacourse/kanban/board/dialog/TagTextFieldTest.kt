@@ -29,7 +29,7 @@ class TagTextFieldTest {
                     value = tagText,
                     onTagChange = {
                         tagText = it
-                        validation = TaskValidator.validateTags(it)
+                        validation = TaskValidator(emptyList()).validateTags(it)
                     },
                     validation = validation,
                 )
@@ -53,7 +53,7 @@ class TagTextFieldTest {
                     value = tagText,
                     onTagChange = {
                         tagText = it
-                        validation = TaskValidator.validateTags(it)
+                        validation = TaskValidator(emptyList()).validateTags(it)
                     },
                     validation = validation,
                 )
@@ -77,7 +77,7 @@ class TagTextFieldTest {
                     value = tagText,
                     onTagChange = {
                         tagText = it
-                        validation = TaskValidator.validateTags(it)
+                        validation = TaskValidator(emptyList()).validateTags(it)
                     },
                     validation = validation,
                 )
