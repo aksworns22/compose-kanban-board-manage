@@ -173,7 +173,10 @@ private fun handleTaskStatusTransition(
 }
 
 @Composable
-@Preview
+@Preview(
+    widthDp = 1280,
+    showBackground = true,
+)
 private fun KanbanBoardScreenPreview() {
     KanbanBoardScreen(
         kanbanBoardState = KanbanBoardState(

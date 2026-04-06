@@ -2,10 +2,13 @@ package woowacourse.kanban.board.ui.board
 
 import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertIsEnabled
+import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.assertIsSelected
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performTextClearance
 import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.runComposeUiTest
 import kotlin.test.Test
@@ -20,7 +23,7 @@ class KanbanBoardScreenTest {
     private val users = listOf(User.None, userDruid)
 
     @Test
-    fun `프로젝트가 하나도 존재하지 않는 경우 에러 메시지가 출력된다`() = runComposeUiTest {
+    fun `프로젝트가 하나도 존재하지 않는 경우 에러 메시지가 화면에 표시된다`() = runComposeUiTest {
         // given 프로젝트가 없는 보드 상태가 주어진다
         setContent {
             KanbanBoardScreen(kanbanBoardState = KanbanBoardState())
@@ -28,6 +31,23 @@ class KanbanBoardScreenTest {
 
         // then
         onNodeWithTag("빈 프로젝트 에러").assertIsDisplayed()
+    }
+
+    @Test
+    fun `수정 다이어로그에서 제목이 비어있다면 태스크 수정 버튼이 비활성화된다`() = runComposeUiTest {
+        // given 태스크 수정 다이어로그
+        val kanbanProjectState = KanbanProjectState("테스트 프로젝트", users, toDoTaskWithAssignee)
+        setContent {
+            KanbanBoardScreen(kanbanBoardState = KanbanBoardState(KanbanProjectState("테스트 프로젝트", users, toDoTaskWithAssignee)))
+        }
+        onNodeWithContentDescription("${Status.TODO}상태의 ${toDoTaskWithAssignee.title}태스크").performClick()
+
+        // when 제목 텍스트를 모두 지운다
+        onNodeWithTag("수정 버튼").assertIsEnabled()
+        onNodeWithTag("제목 입력폼").performTextClearance()
+
+        // then 태스크 수정 버튼이 비활성화된다
+        onNodeWithTag("수정 버튼").assertIsNotEnabled()
     }
 
     @Test
