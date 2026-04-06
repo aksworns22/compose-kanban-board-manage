@@ -1,4 +1,4 @@
-package woowacourse.kanban.board.ui.dialog
+package woowacourse.kanban.board.ui.dialog.creation
 
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -11,18 +11,18 @@ import woowacourse.kanban.board.domain.model.User
 import woowacourse.kanban.board.domain.validator.TaskValidator
 import woowacourse.kanban.board.domain.validator.ValidationResult
 
-class TaskCreationState(private val users: List<User>, private val taskValidator: TaskValidator = TaskValidator(users)) {
+class TaskCreationState(private val users: List<User>) {
     var title by mutableStateOf("")
     private val assignees = users.filterIsInstance<User.Assignee>()
     val validUsers: List<User>
         get() = if (selectedStatus == Status.TODO) users else assignees
-    val titleValidation: ValidationResult by derivedStateOf { taskValidator.validateTitle(title) }
+    val titleValidation: ValidationResult by derivedStateOf { TaskValidator.validateTitle(title) }
 
     var content by mutableStateOf("")
 
     var tag by mutableStateOf("")
     val tags: List<String> get() = tag.split(",").filter { it.isNotEmpty() }.map { it.trim() }
-    val tagValidation: ValidationResult by derivedStateOf { taskValidator.validateTags(tag) }
+    val tagValidation: ValidationResult by derivedStateOf { TaskValidator.validateTags(tag) }
 
     var selectedStatus by mutableStateOf(Status.TODO)
     var selectedUser by mutableStateOf(defaultUser)
@@ -46,7 +46,7 @@ class TaskCreationState(private val users: List<User>, private val taskValidator
     }
 
     fun updateStatus(status: Status) {
-        if (taskValidator.validateUser(status, selectedUser) is ValidationResult.Invalid) {
+        if (TaskValidator.validateUser(status, selectedUser) is ValidationResult.Invalid) {
             selectedUser = assignees.first()
         }
         selectedStatus = status
@@ -55,7 +55,10 @@ class TaskCreationState(private val users: List<User>, private val taskValidator
     val canCreate by derivedStateOf {
         titleValidation is ValidationResult.Valid &&
             tagValidation !is ValidationResult.Invalid &&
-            taskValidator.validateUser(selectedStatus, selectedUser) !is ValidationResult.Invalid
+            TaskValidator.validateUser(
+                selectedStatus,
+                selectedUser,
+            ) !is ValidationResult.Invalid
     }
 
     fun createTask(): Result<Task> {

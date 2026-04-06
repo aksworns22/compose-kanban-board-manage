@@ -2,6 +2,7 @@ package woowacourse.kanban.board.ui.dialog.section
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -23,7 +24,7 @@ import org.jetbrains.compose.resources.stringResource
 import woowacourse.kanban.board.ui.theme.CustomTheme
 
 @Composable
-fun TaskFormHeader(modifier: Modifier = Modifier, onDismiss: () -> Unit, content: @Composable () -> Unit) {
+fun TaskFormHeader(modifier: Modifier = Modifier, onDismiss: () -> Unit, content: @Composable RowScope.() -> Unit) {
     Row(
         modifier = modifier
             .fillMaxWidth()

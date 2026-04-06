@@ -10,7 +10,7 @@ import androidx.compose.ui.test.performTextInput
 import androidx.compose.ui.test.runComposeUiTest
 import kotlin.test.Test
 import woowacourse.kanban.board.domain.model.User
-import woowacourse.kanban.board.ui.dialog.TaskCreateDialog
+import woowacourse.kanban.board.ui.dialog.creation.TaskCreateDialog
 import woowacourse.kanban.board.ui.theme.CustomTheme
 
 @OptIn(ExperimentalTestApi::class)

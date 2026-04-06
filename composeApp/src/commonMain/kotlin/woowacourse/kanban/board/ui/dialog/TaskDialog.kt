@@ -16,6 +16,8 @@ import kanbanboard.composeapp.generated.resources.snackbar_task_delete_error
 import kanbanboard.composeapp.generated.resources.snackbar_task_error
 import woowacourse.kanban.board.domain.model.Task
 import woowacourse.kanban.board.ui.board.KanbanProjectState
+import woowacourse.kanban.board.ui.dialog.creation.TaskCreateDialog
+import woowacourse.kanban.board.ui.dialog.editing.TaskEditDialog
 import woowacourse.kanban.board.ui.theme.CustomTheme
 import woowacourse.kanban.board.ui.util.SnackBarEvent
 
@@ -45,7 +47,7 @@ fun TaskDialog(
             )
         }
 
-        is TaskDialogType.EditTask -> TaskEditDialogScreen(
+        is TaskDialogType.EditTask -> TaskEditDialog(
             users = kanbanProjectState.users,
             onDismiss = onDismiss,
             task = taskDialogType.task,

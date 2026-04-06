@@ -5,7 +5,7 @@ import woowacourse.kanban.board.domain.model.Tag.Companion.MAX_TAG_LENGTH
 import woowacourse.kanban.board.domain.model.Tags.Companion.MAX_TAG_SIZE
 import woowacourse.kanban.board.domain.model.User
 
-class TaskValidator(users: List<User>) {
+object TaskValidator {
     fun validateTitle(input: String): ValidationResult {
         if (input.isBlank()) return ValidationResult.Invalid(ValidationError.TITLE_BLANK)
 
