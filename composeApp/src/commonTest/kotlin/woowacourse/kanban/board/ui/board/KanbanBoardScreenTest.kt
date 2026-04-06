@@ -20,6 +20,17 @@ class KanbanBoardScreenTest {
     private val users = listOf(User.None, userDruid)
 
     @Test
+    fun `프로젝트가 하나도 존재하지 않는 경우 에러 메시지가 출력된다`() = runComposeUiTest {
+        // given 프로젝트가 없는 보드 상태가 주어진다
+        setContent {
+            KanbanBoardScreen(kanbanBoardState = KanbanBoardState())
+        }
+
+        // then
+        onNodeWithTag("빈 프로젝트 에러").assertIsDisplayed()
+    }
+
+    @Test
     fun `태스크 수정 다이어로그에서 Todo 상태면서 담당자가 있다면 Done 상태로 변경가능하다`() = runComposeUiTest {
         // given to-do 상태면서 담당자가 선택되어 있다
         setContent {

@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -19,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
@@ -73,56 +75,60 @@ fun KanbanBoardScreen(kanbanBoardState: KanbanBoardState) {
 
     Box {
         val currentDialog = dialogState.currentDialog
-        if (currentDialog != null) {
-            TaskDialog(
-                kanbanProjectState = kanbanBoardState.currentProject,
-                taskDialogType = currentDialog,
-                onDismiss = dialogState::closeDialog,
-                showSnackBar = showSnackBar,
-            )
-        }
-        Row {
-            ProjectSideBar(
-                kanbanBoardState = kanbanBoardState,
-                onProjectSelect = kanbanBoardState::selectProject,
-                modifier = Modifier
-                    .width(255.dp)
-                    .fillMaxHeight()
-                    .background(CustomTheme.colors.white)
-                    .semantics { contentDescription = "Project SideBar" },
-            )
-            VerticalDivider(modifier = Modifier.width(1.dp).background(CustomTheme.colors.gray.w100))
-            TaskBoard(
-                kanbanBoardState = kanbanBoardState,
-                getIsDropTarget = { status ->
-                    currentDragPosition?.let { columnBounds[status]?.contains(it) } ?: false
-                },
-                onBoundsChanged = { rect, status -> columnBounds[status] = rect },
-                onTaskDragStart = { task -> draggedTask = task },
-                onTaskDragChange = { pos -> currentDragPosition = pos },
-                onTaskDragEnd = {
-                    val dropPosition = currentDragPosition ?: return@TaskBoard
-                    val targetStatus = columnBounds.entries
-                        .firstOrNull { (_, rect) -> rect.contains(dropPosition) }?.key
+        kanbanBoardState.currentProject.onSuccess { currentProject ->
+            if (currentDialog != null) {
+                TaskDialog(
+                    kanbanProjectState = currentProject,
+                    taskDialogType = currentDialog,
+                    onDismiss = dialogState::closeDialog,
+                    showSnackBar = showSnackBar,
+                )
+            }
+            Row {
+                ProjectSideBar(
+                    kanbanBoardState = kanbanBoardState,
+                    onProjectSelect = kanbanBoardState::selectProject,
+                    modifier = Modifier
+                        .width(255.dp)
+                        .fillMaxHeight()
+                        .background(CustomTheme.colors.white)
+                        .semantics { contentDescription = "Project SideBar" },
+                )
+                VerticalDivider(modifier = Modifier.width(1.dp).background(CustomTheme.colors.gray.w100))
+                TaskBoard(
+                    kanbanProjectState = currentProject,
+                    getIsDropTarget = { status ->
+                        currentDragPosition?.let { columnBounds[status]?.contains(it) } ?: false
+                    },
+                    onBoundsChanged = { rect, status -> columnBounds[status] = rect },
+                    onTaskDragStart = { task -> draggedTask = task },
+                    onTaskDragChange = { pos -> currentDragPosition = pos },
+                    onTaskDragEnd = {
+                        val dropPosition = currentDragPosition ?: return@TaskBoard
+                        val targetStatus = columnBounds.entries
+                            .firstOrNull { (_, rect) -> rect.contains(dropPosition) }?.key
 
-                    draggedTask?.let { task ->
-                        if (targetStatus != null && task.status != targetStatus) {
-                            handleTaskStatusTransition(
-                                projectState = kanbanBoardState.currentProject,
-                                task = task,
-                                targetStatus = targetStatus,
-                                showSnackBar = showSnackBar,
-                            )
+                        draggedTask?.let { task ->
+                            if (targetStatus != null && task.status != targetStatus) {
+                                handleTaskStatusTransition(
+                                    projectState = currentProject,
+                                    task = task,
+                                    targetStatus = targetStatus,
+                                    showSnackBar = showSnackBar,
+                                )
+                            }
                         }
-                    }
-                    resetDrag()
-                },
-                onTaskDragCancel = resetDrag,
-                onTaskClick = { task ->
-                    dialogState.openDialog(TaskDialogType.EditTask(task))
-                },
-                onClickCreate = { dialogState.openDialog(TaskDialogType.CreateTask) },
-            )
+                        resetDrag()
+                    },
+                    onTaskDragCancel = resetDrag,
+                    onTaskClick = { task ->
+                        dialogState.openDialog(TaskDialogType.EditTask(task))
+                    },
+                    onClickCreate = { dialogState.openDialog(TaskDialogType.CreateTask) },
+                )
+            }
+        }.onFailure {
+            Text("최소 하나의 프로젝트가 필요합니다!", modifier = Modifier.testTag("빈 프로젝트 에러"))
         }
 
         SnackbarHost(

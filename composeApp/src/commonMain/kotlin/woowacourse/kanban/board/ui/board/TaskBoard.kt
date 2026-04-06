@@ -23,7 +23,7 @@ import woowacourse.kanban.board.ui.theme.CustomTheme
 
 @Composable
 fun TaskBoard(
-    kanbanBoardState: KanbanBoardState,
+    kanbanProjectState: KanbanProjectState,
     modifier: Modifier = Modifier,
     getIsDropTarget: (Status) -> Boolean = { false },
     onBoundsChanged: (Rect, Status) -> Unit = { _, _ -> },
@@ -38,11 +38,11 @@ fun TaskBoard(
         modifier = modifier.fillMaxWidth().fillMaxHeight().background(CustomTheme.colors.gray.w50),
     ) {
         KanbanHeader(
-            title = kanbanBoardState.currentProject.name,
+            title = kanbanProjectState.name,
             onClickCreate = onClickCreate,
-            totalCount = kanbanBoardState.currentProject.totalCount,
-            completeCount = kanbanBoardState.currentProject.completeCount,
-            completeRatio = kanbanBoardState.currentProject.completeRatio,
+            totalCount = kanbanProjectState.totalCount,
+            completeCount = kanbanProjectState.completeCount,
+            completeRatio = kanbanProjectState.completeRatio,
         )
 
         Row(
@@ -54,7 +54,7 @@ fun TaskBoard(
                     modifier = Modifier.weight(1f, fill = false).widthIn(max = 320.dp).fillMaxHeight()
                         .semantics { contentDescription = "$status 태스크 목록" },
                     status = status,
-                    tasks = kanbanBoardState.currentProject.getTasks(status),
+                    tasks = kanbanProjectState.getTasks(status),
                     onTaskClick = onTaskClick,
                     boxColor = status.getBoxColor(),
                     getIsDropTarget = { getIsDropTarget(status) },
@@ -73,14 +73,13 @@ fun TaskBoard(
 @Composable
 private fun TaskBoardPreview() {
     TaskBoard(
-        kanbanBoardState = KanbanBoardState(
-            KanbanProjectState(
-                name = "스마일은 천재인가?",
-                users = listOf(
-                    User.None,
-                    User.Assignee("손흥민"),
-                    User.Assignee("봉준호"),
-                ),
+        kanbanProjectState =
+        KanbanProjectState(
+            name = "스마일은 천재인가?",
+            users = listOf(
+                User.None,
+                User.Assignee("손흥민"),
+                User.Assignee("봉준호"),
             ),
         ),
     )

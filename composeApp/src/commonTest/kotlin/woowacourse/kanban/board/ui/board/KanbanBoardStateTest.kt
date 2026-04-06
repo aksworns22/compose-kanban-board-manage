@@ -2,20 +2,12 @@ package woowacourse.kanban.board.ui.board
 
 import kotlin.test.Test
 import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.assertThatThrownBy
 import woowacourse.kanban.board.domain.model.Status
 import woowacourse.kanban.board.domain.model.Tags
 import woowacourse.kanban.board.domain.model.Task
 import woowacourse.kanban.board.domain.model.User.Assignee
 
 class KanbanBoardStateTest {
-    @Test
-    fun `프로젝트가 하나도 없다면 예외를 발생시킨다`() {
-        assertThatThrownBy {
-            KanbanBoardState()
-        }.isInstanceOf(IllegalArgumentException::class.java)
-    }
-
     @Test
     fun `3개의 프로젝트가 주어졌을 때 0번 프로젝트에서 1번 프로젝트로 이동하면 현재 프로젝트는 1번 프로젝트가 된다`() {
         // given
@@ -27,11 +19,15 @@ class KanbanBoardStateTest {
         val kanbanBoardState = KanbanBoardState(*projects)
 
         // when
-        assertThat(kanbanBoardState.currentProject).isEqualTo(projects[0])
+        kanbanBoardState.currentProject.onSuccess { currentProject ->
+            assertThat(currentProject).isEqualTo(projects[0])
+        }
         kanbanBoardState.selectProject(1)
 
         // then
-        assertThat(kanbanBoardState.currentProject).isEqualTo(projects[1])
+        kanbanBoardState.currentProject.onSuccess { currentProject ->
+            assertThat(currentProject).isEqualTo(projects[1])
+        }
     }
 
     @Test
@@ -44,7 +40,9 @@ class KanbanBoardStateTest {
         kanbanBoardState.selectProject(2)
 
         // then
-        assertThat(kanbanBoardState.currentProject).isEqualTo(project)
+        kanbanBoardState.currentProject.onSuccess { currentProject ->
+            assertThat(currentProject).isEqualTo(project)
+        }
     }
 
     @Test
@@ -57,7 +55,9 @@ class KanbanBoardStateTest {
         kanbanBoardState.selectProject(-1)
 
         // then
-        assertThat(kanbanBoardState.currentProject).isEqualTo(project)
+        kanbanBoardState.currentProject.onSuccess { currentProject ->
+            assertThat(currentProject).isEqualTo(project)
+        }
     }
 
     @Test

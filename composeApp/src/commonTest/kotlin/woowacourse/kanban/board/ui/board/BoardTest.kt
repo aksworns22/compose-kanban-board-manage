@@ -22,6 +22,7 @@ class BoardTest {
         User.Assignee("유재석"),
         User.Assignee("노홍철"),
     )
+
     @Test
     fun `사용자가 프로젝트 선택하면 해당하는 해당 프로젝트 화면으로 전환된다`() = runComposeUiTest {
 

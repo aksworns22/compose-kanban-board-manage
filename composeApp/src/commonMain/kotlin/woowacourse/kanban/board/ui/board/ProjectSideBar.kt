@@ -39,14 +39,16 @@ fun ProjectSideBar(
     Column(
         modifier = modifier,
     ) {
-        SideBarHeader(modifier = Modifier.padding(innerPadding))
-        HorizontalDivider(modifier = Modifier.height(1.dp).background(CustomTheme.colors.gray.w100))
-        ProjectTabs(
-            kanbanBoardState.allProjects,
-            kanbanBoardState.currentProject,
-            onProjectSelect,
-            modifier = Modifier.padding(innerPadding),
-        )
+        kanbanBoardState.currentProject.onSuccess { currentProject ->
+            SideBarHeader(modifier = Modifier.padding(innerPadding))
+            HorizontalDivider(modifier = Modifier.height(1.dp).background(CustomTheme.colors.gray.w100))
+            ProjectTabs(
+                kanbanBoardState.allProjects,
+                currentProject,
+                onProjectSelect,
+                modifier = Modifier.padding(innerPadding),
+            )
+        }
     }
 }
 
