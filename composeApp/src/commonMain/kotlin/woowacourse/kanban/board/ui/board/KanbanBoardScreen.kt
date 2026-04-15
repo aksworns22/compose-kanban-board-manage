@@ -31,7 +31,7 @@ import kanbanboard.composeapp.generated.resources.snackbar_move_no_assignee_erro
 import kanbanboard.composeapp.generated.resources.snackbar_move_task
 import kanbanboard.composeapp.generated.resources.snackbar_unknown_error
 import org.jetbrains.compose.resources.getString
-import woowacourse.kanban.board.domain.StatusTransitionResult
+import woowacourse.kanban.board.domain.model.NoAssigneeException
 import woowacourse.kanban.board.domain.model.Status
 import woowacourse.kanban.board.domain.model.Task
 import woowacourse.kanban.board.domain.model.User
@@ -144,31 +144,25 @@ private fun handleTaskStatusTransition(
     projectState: KanbanProjectState,
     showSnackBar: (SnackBarEvent) -> Unit,
 ) {
-    val movementResult = projectState.changeTaskStatus(task = task, newStatus = targetStatus)
-    when (movementResult) {
-        StatusTransitionResult.Success -> {
-            showSnackBar(
-                SnackBarEvent(
-                    strRes = Res.string.snackbar_move_task,
-                ),
-            )
-        }
-
-        StatusTransitionResult.Failed -> {
-            showSnackBar(
-                SnackBarEvent(
-                    strRes = Res.string.snackbar_move_general_error,
-                ),
-            )
-        }
-
-        StatusTransitionResult.NoAssignee -> {
-            showSnackBar(
-                SnackBarEvent(
-                    strRes = Res.string.snackbar_move_no_assignee_error,
-                ),
-            )
-        }
+    try {
+        projectState.changeTaskStatus(task = task, newStatus = targetStatus)
+        showSnackBar(
+            SnackBarEvent(
+                strRes = Res.string.snackbar_move_task,
+            ),
+        )
+    } catch (_: NoAssigneeException) {
+        showSnackBar(
+            SnackBarEvent(
+                strRes = Res.string.snackbar_move_no_assignee_error,
+            ),
+        )
+    } catch (_: IllegalArgumentException) {
+        showSnackBar(
+            SnackBarEvent(
+                strRes = Res.string.snackbar_move_general_error,
+            ),
+        )
     }
 }
 

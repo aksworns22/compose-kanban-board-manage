@@ -33,6 +33,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.jetbrains.compose.resources.stringResource
+import woowacourse.kanban.board.domain.model.DefaultTodoTask
 import woowacourse.kanban.board.domain.model.Status
 import woowacourse.kanban.board.domain.model.Tags
 import woowacourse.kanban.board.domain.model.Task
@@ -146,63 +147,63 @@ private fun TaskBoxPreview() {
     TaskBox(
         status = Status.DONE,
         tasks = listOf(
-            Task(
+            DefaultTodoTask(
                 title = "Task 1",
                 description = "asdfasd",
                 tags = Tags(emptyList()),
                 user = User.Assignee("dino"),
                 status = Status.TODO,
             ),
-            Task(
+            DefaultTodoTask(
                 title = "Task 2",
                 description = "asdfasd",
                 tags = Tags(emptyList()),
                 user = User.Assignee("dino"),
                 status = Status.TODO,
             ),
-            Task(
+            DefaultTodoTask(
                 title = "Task 3",
                 description = "asdfasd",
                 tags = Tags(emptyList()),
                 user = User.Assignee("dino"),
                 status = Status.TODO,
             ),
-            Task(
+            DefaultTodoTask(
                 title = "Task 1",
                 description = "asdfasd",
                 tags = Tags(emptyList()),
                 user = User.Assignee("dino"),
                 status = Status.TODO,
             ),
-            Task(
+            DefaultTodoTask(
                 title = "Task 2",
                 description = "asdfasd",
                 tags = Tags(emptyList()),
                 user = User.Assignee("dino"),
                 status = Status.TODO,
             ),
-            Task(
+            DefaultTodoTask(
                 title = "Task 3",
                 description = "asdfasd",
                 tags = Tags(emptyList()),
                 user = User.Assignee("dino"),
                 status = Status.TODO,
             ),
-            Task(
+            DefaultTodoTask(
                 title = "Task 1",
                 description = "asdfasd",
                 tags = Tags(emptyList()),
                 user = User.Assignee("dino"),
                 status = Status.TODO,
             ),
-            Task(
+            DefaultTodoTask(
                 title = "Task 2",
                 description = "asdfasd",
                 tags = Tags(emptyList()),
                 user = User.Assignee("dino"),
                 status = Status.TODO,
             ),
-            Task(
+            DefaultTodoTask(
                 title = "Task 3",
                 description = "asdfasd",
                 tags = Tags(emptyList()),

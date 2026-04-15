@@ -8,10 +8,10 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.runComposeUiTest
 import kotlin.test.Test
+import woowacourse.kanban.board.domain.model.DefaultTodoTask
 import woowacourse.kanban.board.domain.model.Status
 import woowacourse.kanban.board.domain.model.Tag
 import woowacourse.kanban.board.domain.model.Tags
-import woowacourse.kanban.board.domain.model.Task
 import woowacourse.kanban.board.domain.model.User
 import woowacourse.kanban.board.ui.theme.CustomTheme
 
@@ -47,7 +47,7 @@ class BoardTest {
     @Test
     fun `태스크박스가 아닌 곳에 드래그앤드롭 할 경우 상태가 바뀌지 않는다`() = runComposeUiTest {
         // Given to-do 상태의 A 태스크가 있다
-        val task = Task(
+        val task = DefaultTodoTask(
             title = "A 태스크",
             tags = Tags(listOf(Tag("웃지마"))),
             user = User.Assignee("정준하"),
@@ -76,7 +76,7 @@ class BoardTest {
     @Test
     fun `동일한 상태의 태스크박스에 드롭할 경우 상태가 바뀌지 않는다`() = runComposeUiTest {
         // Given to-do 상태의 A 태스크가 있다
-        val task = Task(
+        val task = DefaultTodoTask(
             title = "A 태스크",
             tags = Tags(listOf(Tag("웃지마"))),
             user = User.Assignee("정준하"),

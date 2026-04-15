@@ -1,9 +1,6 @@
 package woowacourse.kanban.board.ui.board
 
 import androidx.compose.runtime.mutableStateListOf
-import woowacourse.kanban.board.domain.StatusTransitionResult
-import woowacourse.kanban.board.domain.StatusTransitionRule
-import woowacourse.kanban.board.domain.checkDefaultStatusTransition
 import woowacourse.kanban.board.domain.model.Status
 import woowacourse.kanban.board.domain.model.Task
 import woowacourse.kanban.board.domain.model.User
@@ -20,16 +17,8 @@ class KanbanProjectState(val name: String, val users: List<User>, vararg tasks: 
         tasks.add(task)
     }
 
-    fun changeTaskStatus(
-        task: Task,
-        newStatus: Status,
-        rule: StatusTransitionRule = StatusTransitionRule(::checkDefaultStatusTransition),
-    ): StatusTransitionResult {
-        val movementResult = rule.isMovable(task, newStatus)
-        if (movementResult == StatusTransitionResult.Success) {
-            tasks[tasks.indexOf(task)] = task.copy(status = newStatus)
-        }
-        return movementResult
+    fun changeTaskStatus(task: Task, newStatus: Status) {
+        tasks[tasks.indexOf(task)] = task.moveTo(newStatus)
     }
 
     fun editTask(originalTask: Task, newTask: Task) {

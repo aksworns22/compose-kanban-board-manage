@@ -5,10 +5,10 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.runComposeUiTest
 import kotlin.test.Test
+import woowacourse.kanban.board.domain.model.DefaultTodoTask
 import woowacourse.kanban.board.domain.model.Status
 import woowacourse.kanban.board.domain.model.Tag
 import woowacourse.kanban.board.domain.model.Tags
-import woowacourse.kanban.board.domain.model.Task
 import woowacourse.kanban.board.domain.model.User
 import woowacourse.kanban.board.ui.board.TaskCard
 import woowacourse.kanban.board.ui.theme.CustomTheme
@@ -24,7 +24,7 @@ class KanbanCardUiTest {
 
         setContent {
             CustomTheme {
-                TaskCard(Task(title = title, description = content, tags = tags, user = assignee, status = Status.TODO))
+                TaskCard(DefaultTodoTask(title = title, description = content, tags = tags, user = assignee, status = Status.TODO))
             }
         }
 

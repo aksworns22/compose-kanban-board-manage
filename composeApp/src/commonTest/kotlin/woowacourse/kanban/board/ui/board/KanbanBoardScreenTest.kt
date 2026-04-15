@@ -12,9 +12,10 @@ import androidx.compose.ui.test.performTextClearance
 import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.runComposeUiTest
 import kotlin.test.Test
+import woowacourse.kanban.board.domain.model.DefaultDoneTask
+import woowacourse.kanban.board.domain.model.DefaultTodoTask
 import woowacourse.kanban.board.domain.model.Status
 import woowacourse.kanban.board.domain.model.Tags
-import woowacourse.kanban.board.domain.model.Task
 import woowacourse.kanban.board.domain.model.User
 
 @OptIn(ExperimentalTestApi::class)
@@ -177,21 +178,21 @@ class KanbanBoardScreenTest {
         onNodeWithContentDescription("${doneTask.status}상태의 ${doneTask.title}태스크").assertIsDisplayed()
     }
 
-    private val toDoTaskWithAssignee = Task(
+    private val toDoTaskWithAssignee = DefaultTodoTask(
         title = "Todo 태스크",
         tags = Tags(emptyList()),
         user = User.Assignee("사용자"),
         status = Status.TODO,
     )
 
-    private val toDoTaskWithoutAssignee = Task(
+    private val toDoTaskWithoutAssignee = DefaultTodoTask(
         title = "Todo 태스크",
         tags = Tags(emptyList()),
         user = User.None,
         status = Status.TODO,
     )
 
-    private val doneTask = Task(
+    private val doneTask = DefaultDoneTask(
         title = "Done 태스크",
         tags = Tags(emptyList()),
         user = User.Assignee("사용자"),
