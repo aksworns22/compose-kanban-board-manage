@@ -75,60 +75,60 @@ fun KanbanBoardScreen(kanbanBoardState: KanbanBoardState) {
 
     Box {
         val currentDialog = dialogState.currentDialog
-        kanbanBoardState.currentProject.onSuccess { currentProject ->
-            if (currentDialog != null) {
-                TaskDialog(
-                    kanbanProjectState = currentProject,
-                    taskDialogType = currentDialog,
-                    onDismiss = dialogState::closeDialog,
-                    showSnackBar = showSnackBar,
-                )
-            }
-            Row {
-                ProjectSideBar(
-                    kanbanBoardState = kanbanBoardState,
-                    onProjectSelect = kanbanBoardState::selectProject,
-                    modifier = Modifier
-                        .width(255.dp)
-                        .fillMaxHeight()
-                        .background(CustomTheme.colors.white)
-                        .semantics { contentDescription = "Project SideBar" },
-                )
-                VerticalDivider(modifier = Modifier.width(1.dp).background(CustomTheme.colors.gray.w100))
-                TaskBoard(
-                    kanbanProjectState = currentProject,
-                    getIsDropTarget = { status ->
-                        currentDragPosition?.let { columnBounds[status]?.contains(it) } ?: false
-                    },
-                    onBoundsChanged = { rect, status -> columnBounds[status] = rect },
-                    onTaskDragStart = { task -> draggedTask = task },
-                    onTaskDragChange = { pos -> currentDragPosition = pos },
-                    onTaskDragEnd = {
-                        val dropPosition = currentDragPosition ?: return@TaskBoard
-                        val targetStatus = columnBounds.entries
-                            .firstOrNull { (_, rect) -> rect.contains(dropPosition) }?.key
-
-                        draggedTask?.let { task ->
-                            if (targetStatus != null && task.status != targetStatus) {
-                                handleTaskStatusTransition(
-                                    projectState = currentProject,
-                                    task = task,
-                                    targetStatus = targetStatus,
-                                    showSnackBar = showSnackBar,
-                                )
-                            }
-                        }
-                        resetDrag()
-                    },
-                    onTaskDragCancel = resetDrag,
-                    onTaskClick = { task ->
-                        dialogState.openDialog(TaskDialogType.EditTask(task))
-                    },
-                    onClickCreate = { dialogState.openDialog(TaskDialogType.CreateTask) },
-                )
-            }
-        }.onFailure {
+        val currentProject = kanbanBoardState.currentProject.getOrElse {
             Text("최소 하나의 프로젝트가 필요합니다!", modifier = Modifier.testTag("빈 프로젝트 에러"))
+            return@Box
+        }
+        if (currentDialog != null) {
+            TaskDialog(
+                kanbanProjectState = currentProject,
+                taskDialogType = currentDialog,
+                onDismiss = dialogState::closeDialog,
+                showSnackBar = showSnackBar,
+            )
+        }
+        Row {
+            ProjectSideBar(
+                kanbanBoardState = kanbanBoardState,
+                onProjectSelect = kanbanBoardState::selectProject,
+                modifier = Modifier
+                    .width(255.dp)
+                    .fillMaxHeight()
+                    .background(CustomTheme.colors.white)
+                    .semantics { contentDescription = "Project SideBar" },
+            )
+            VerticalDivider(modifier = Modifier.width(1.dp).background(CustomTheme.colors.gray.w100))
+            TaskBoard(
+                kanbanProjectState = currentProject,
+                getIsDropTarget = { status ->
+                    currentDragPosition?.let { columnBounds[status]?.contains(it) } ?: false
+                },
+                onBoundsChanged = { rect, status -> columnBounds[status] = rect },
+                onTaskDragStart = { task -> draggedTask = task },
+                onTaskDragChange = { pos -> currentDragPosition = pos },
+                onTaskDragEnd = {
+                    val dropPosition = currentDragPosition ?: return@TaskBoard
+                    val targetStatus = columnBounds.entries
+                        .firstOrNull { (_, rect) -> rect.contains(dropPosition) }?.key
+
+                    draggedTask?.let { task ->
+                        if (targetStatus != null && task.status != targetStatus) {
+                            handleTaskStatusTransition(
+                                projectState = currentProject,
+                                task = task,
+                                targetStatus = targetStatus,
+                                showSnackBar = showSnackBar,
+                            )
+                        }
+                    }
+                    resetDrag()
+                },
+                onTaskDragCancel = resetDrag,
+                onTaskClick = { task ->
+                    dialogState.openDialog(TaskDialogType.EditTask(task))
+                },
+                onClickCreate = { dialogState.openDialog(TaskDialogType.CreateTask) },
+            )
         }
 
         SnackbarHost(

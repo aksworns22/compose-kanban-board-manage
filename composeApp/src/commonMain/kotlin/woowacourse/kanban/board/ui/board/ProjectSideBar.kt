@@ -39,16 +39,18 @@ fun ProjectSideBar(
     Column(
         modifier = modifier,
     ) {
-        kanbanBoardState.currentProject.onSuccess { currentProject ->
-            SideBarHeader(modifier = Modifier.padding(innerPadding))
-            HorizontalDivider(modifier = Modifier.height(1.dp).background(CustomTheme.colors.gray.w100))
-            ProjectTabs(
-                kanbanBoardState.allProjects,
-                currentProject,
-                onProjectSelect,
-                modifier = Modifier.padding(innerPadding),
-            )
+        val currentProject = kanbanBoardState.currentProject.getOrElse {
+            Text("최소 하나의 프로젝트가 필요합니다!")
+            return@Column
         }
+        SideBarHeader(modifier = Modifier.padding(innerPadding))
+        HorizontalDivider(modifier = Modifier.height(1.dp).background(CustomTheme.colors.gray.w100))
+        ProjectTabs(
+            kanbanBoardState.allProjects,
+            currentProject,
+            onProjectSelect,
+            modifier = Modifier.padding(innerPadding),
+        )
     }
 }
 
