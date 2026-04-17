@@ -46,8 +46,8 @@ fun ProjectSideBar(
         SideBarHeader(modifier = Modifier.padding(innerPadding))
         HorizontalDivider(modifier = Modifier.height(1.dp).background(CustomTheme.colors.gray.w100))
         ProjectTabs(
-            kanbanBoardState.allProjects,
-            currentProject,
+            kanbanBoardState.allProjectNames,
+            currentProject.name,
             onProjectSelect,
             modifier = Modifier.padding(innerPadding),
         )
@@ -76,8 +76,8 @@ private fun SideBarHeader(modifier: Modifier = Modifier) {
 
 @Composable
 private fun ProjectTabs(
-    projects: List<KanbanProjectState>,
-    selectedProject: KanbanProjectState,
+    projectNames: List<String>,
+    selectedProjectName: String,
     onProjectSelect: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -85,13 +85,13 @@ private fun ProjectTabs(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        projects.forEachIndexed { index, project ->
-            val isSelected = (project == selectedProject)
+        projectNames.forEachIndexed { index, projectName ->
+            val isSelected = (projectName == selectedProjectName)
             FilterChip(
                 selected = isSelected,
                 onClick = { onProjectSelect(index) },
-                label = { Text(project.name, maxLines = 1, overflow = TextOverflow.Ellipsis) },
-                modifier = Modifier.fillMaxWidth().semantics { contentDescription = "${project.name} 전환 버튼" },
+                label = { Text(projectName, maxLines = 1, overflow = TextOverflow.Ellipsis) },
+                modifier = Modifier.fillMaxWidth().semantics { contentDescription = "$projectName 전환 버튼" },
                 colors = FilterChipDefaults.filterChipColors(
                     containerColor = CustomTheme.colors.white,
                     labelColor = CustomTheme.colors.blue.w700,

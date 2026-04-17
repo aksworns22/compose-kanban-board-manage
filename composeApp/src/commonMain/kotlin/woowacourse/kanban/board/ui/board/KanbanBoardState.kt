@@ -6,11 +6,9 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.setValue
 
 class KanbanBoardState(vararg kanbanProjectStates: KanbanProjectState) {
-//    init {
-//        require(kanbanProjectStates.isNotEmpty()) { "최소 하나의 칸반 프로젝트가 필요합니다. " }
-//    }
     private val _allProjects = mutableStateListOf(*kanbanProjectStates)
     val allProjects: List<KanbanProjectState> get() = _allProjects.toList()
+    val allProjectNames: List<String> get() = _allProjects.map { it.name }
 
     private var currentProjectIndex: Int by mutableIntStateOf(0)
 
